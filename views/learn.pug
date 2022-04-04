@@ -1,0 +1,39 @@
+extends layout
+
+
+block head
+    script.
+        var allLetters = JSON.parse(`!{JSON.stringify(allLetters, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
+        var rowLetters = JSON.parse(`!{JSON.stringify(rowLetters, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
+        var alphabet   = `#{alphabet}`
+        var letter = `#{letter}`
+    script(src="/javascripts/learn.js", defer)
+
+block content
+    img#x-button
+    #game-container
+        #game-column-container
+            #game-progress-bar-container
+                img#exit-button(src="/images/icons/exit.svg")
+                #game-progress-bar
+                    #game-progress-bar-full
+                        #game-progress-bar-completed
+            #game-panels
+                img#kana-image(src="/images/logos/app-colored.svg")
+                #panel-delimiter
+                #options
+                    for i in [1, 2, 3, 4]
+                        .option 
+                            span.option-letter ...
+            span#title Select the sound this #{alphabet} letter makes
+        #game-results-container
+            .game-result#game-result-completed
+                span.petals-earned +1
+                img.petals-earned-icon(src="/images/particles/petal_" + Math.ceil(Math.random() * 5) + '.svg')
+                p.petals-earned-for Game completed
+            .game-result#game-result-no-mistakes
+                span.petals-earned +1
+                img.petals-earned-icon(src="/images/particles/petal_" + Math.ceil(Math.random() * 5) + '.svg')
+                p.petals-earned-for No mistakes
+
+        

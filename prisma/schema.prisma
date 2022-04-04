@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model alphabets {
+  id   BigInt @id @unique(map: "id") @default(autoincrement())
+  name String @unique(map: "name") @db.VarChar(32)
+  rows rows[]
+}
+
+model letters {
+  id     BigInt @id @unique(map: "id") @default(autoincrement())
+  name   String @db.VarChar(3)
+  row_id BigInt
+  rows   rows   @relation(fields: [row_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "letters_ibfk_1")
+
+  @@index([row_id], map: "row_id")
+}
+
+model rows {
+  id                 BigInt    @id @unique(map: "id") @default(autoincrement())
+  name               String    @db.VarChar(32)
+  letter             String    @db.VarChar(32)
+  petals_to_complete Int       @default(500)
+  alphabet_id        BigInt
+  alphabets          alphabets @relation(fields: [alphabet_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rows_ibfk_1")
+  letters            letters[]
+
+  @@index([alphabet_id], map: "alphabet_id")
+}

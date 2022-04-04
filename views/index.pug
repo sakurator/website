@@ -1,0 +1,39 @@
+extends layout
+
+block head
+  script(src="/javascripts/index.js", defer)
+
+block content
+  #content-container
+    #left-panel
+      #alphabet-switch-panel
+        span.alphabet-switch-title.enabled#hiragana-alphabet-switch-title Hiragana
+        #alphabet-switch
+          input(type="checkbox")#alphabet-switch-checkbox
+          span#alphabet-switch-slider
+        span.alphabet-switch-title#katakana-alphabet-switch-title Katakana
+      #rows-container
+        for row in rows
+          .row(id="row-" + row.letter)
+            .row-card
+              img.row-kana(src="/images/letters/" + alphabet + "_" + row.letter + "a" + ".svg")
+              .row-progress
+                .row-progress-full
+                  .row-progress-completed.hiragana(id="progress-" + row.letter + "-" + row.petals_to_complete)
+            .row-description
+              .row-title-container
+                img.row-completed-icon(id="completed-" + row.letter + "-" + row.petals_to_complete, src="/images/icons/completed.svg")
+                span.row-title= row.name
+              span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petals_to_complete)
+      span#footer 
+        | © Sakurator 2022 by 
+        a(href="https://github.com/anafro") anafro
+        | . 
+        a(href="/terms-of-use") Terms of use 
+        | | 
+        a(href="/policy") Privacy policy
+        |. 
+    #right-panel
+      img(src="/images/logos/titled_gray.svg")#logo
+      img(src="/images/illustrations/sakura.svg")#sakura-illustration
+
