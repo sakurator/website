@@ -1,7 +1,3 @@
-function play(sound) {
-    new Audio("/sounds/" + sound + ".wav").play()
-}
-
 let currentAlphabet = "hiragana"
 
 function updatePetalScores() {

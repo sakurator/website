@@ -15,12 +15,6 @@ let game = {
     punished: false,
 }
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-function play(sound) {
-    new Audio("/sounds/" + sound + ".wav").play()
-}
-
 function updateProgressBar() {
     const progressBar = document.getElementById('game-progress-bar-completed')
     progressBar.style.width = (100 * game.points / game.total) + '%'
