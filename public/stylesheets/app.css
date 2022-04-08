@@ -213,6 +213,8 @@ a {
   padding-top: 1em;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1em;
+  align-items: flex-end;
 }
 #content-container #right-panel #logo-container #yandex_rtb_R-A-1622843-1 {
   width: 320px;
