@@ -3,7 +3,7 @@ extends layout
 block head
   script(src="/javascripts/index.js", defer)  
   // Yandex.RTB
-  - window.yaContextCb=window.yaContextCb||[]</script>
+  <script>window.yaContextCb=window.yaContextCb||[]</script>
   script(src="https://yandex.ru/ads/system/context.js", async)
 
 block content
@@ -42,7 +42,7 @@ block content
     #right-panel
       #logo-container
         img(src="/images/logos/titled_gray.svg")#logo
-        #yandex_rtb_R-A-1622843-1
+        div(id="yandex_rtb_R-A-1622843-1")
         script(src="/javascripts/libs/ya.js")
       img(src="/images/illustrations/sakura.svg")#sakura-illustration
 
