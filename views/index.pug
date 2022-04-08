@@ -2,10 +2,11 @@ extends layout
 
 block head
   script(src="/javascripts/index.js", defer)
-  for sound in ['click', 'hover', 'alphabet_switch_hiragana', 'alphabet_switch_katakana']
-    link(rel="preload", href="/sounds/" + sound + ".mp3", as="audio")
 
 block content
+  for sound in ['click', 'hover', 'alphabet_switch_hiragana', 'alphabet_switch_katakana']
+     audio(preload="auto")
+            source(src="/sounds/" + sound + ".mp3", type="audio/mpeg")
   #content-container
     #left-panel
       #alphabet-switch-panel
