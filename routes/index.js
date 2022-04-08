@@ -22,7 +22,7 @@ router.get('/', async function(req, res, next) {
 
   res.render('index', { 
     alphabet: "Hiragana",
-    title: 'Select the row',
+    title: 'Learn Japanese alphabets for free!',
     rows: rows,
     cookies: req.cookies,
   });
