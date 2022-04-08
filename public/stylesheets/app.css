@@ -213,7 +213,6 @@ a {
   padding-top: 1em;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1em;
   align-items: flex-end;
 }
 #content-container #right-panel #logo-container #yandex_rtb_R-A-1622843-1 {
@@ -222,6 +221,7 @@ a {
 }
 #content-container #right-panel #logo-container #logo {
   height: 24px;
+  margin-bottom: 24px;
 }
 #content-container #right-panel #sakura-illustration {
   width: 70%;
