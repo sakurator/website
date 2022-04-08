@@ -8,6 +8,8 @@ block head
         var alphabet   = `#{alphabet}`
         var letter = `#{letter}`
     script(src="/javascripts/learn.js", defer)
+    for sound in ['click', 'hover', 'incorrect', 'result_completed', 'result_no_mistakes', 'level_completed', 'level_completed_perfectly'].concat(rowLetters.map(rowLetter => "letters/" + rowLetter.name)).concat(Array.from({length: 9}, (_, i) => i + 1).map(i => "combo_" + i))
+        link(rel="preload", href="/sounds/" + sound + ".mp3", as="audio")
 
 block content
     img#x-button

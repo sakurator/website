@@ -2,6 +2,8 @@ extends layout
 
 block head
   script(src="/javascripts/index.js", defer)
+  for sound in ['click', 'hover', 'alphabet_switch_hiragana', 'alphabet_switch_katakana']
+    link(rel="preload", href="/sounds/" + sound + ".mp3", as="audio")
 
 block content
   #content-container
