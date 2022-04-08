@@ -1,7 +1,10 @@
 extends layout
 
 block head
-  script(src="/javascripts/index.js", defer)
+  script(src="/javascripts/index.js", defer)  
+  // Yandex.RTB
+  - window.yaContextCb=window.yaContextCb||[]</script>
+  script(src="https://yandex.ru/ads/system/context.js", async)
 
 block content
   for sound in ['click', 'hover', 'alphabet_switch_hiragana', 'alphabet_switch_katakana']
@@ -37,6 +40,15 @@ block content
         a(href="/policy") Privacy policy
         |. 
     #right-panel
-      img(src="/images/logos/titled_gray.svg")#logo
+      #logo-container
+        img(src="/images/logos/titled_gray.svg")#logo
+        #yandex_rtb_R-A-1622843-1
+        script
+          .window.yaContextCb.push(()=>{
+            Ya.Context.AdvManager.render({
+              renderTo: 'yandex_rtb_R-A-1622843-1',
+              blockId: 'R-A-1622843-1'
+            })
+          })
       img(src="/images/illustrations/sakura.svg")#sakura-illustration
 
