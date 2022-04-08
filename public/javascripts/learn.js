@@ -109,7 +109,7 @@ document.querySelectorAll(".option").forEach(option => {
         let mouse = { x: event.clientX, y: event.clientY }
 
         if(rightAnswer === option.children[0].innerHTML) {
-            for(var i = 0; i < game.combo * 6; i++)
+            for(var i = 0; i < game.combo; i++)
                 createPetal(mouse, game.combo * 2.5 * Math.random() + 1)
         
             play('letters/' + rightAnswer)
