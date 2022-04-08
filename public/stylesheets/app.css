@@ -208,10 +208,16 @@ a {
   align-items: end;
   justify-content: space-between;
 }
-#content-container #right-panel #logo {
-  height: 24px;
+#content-container #right-panel #logo-container {
   padding-right: 2em;
   padding-top: 1em;
+}
+#content-container #right-panel #logo-container #yandex_rtb_R-A-1622843-1 {
+  width: 320px;
+  height: 100px;
+}
+#content-container #right-panel #logo-container #logo {
+  height: 24px;
 }
 #content-container #right-panel #sakura-illustration {
   width: 70%;
