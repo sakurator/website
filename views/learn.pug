@@ -7,8 +7,9 @@ block head
         var rowLetters = JSON.parse(`!{JSON.stringify(rowLetters, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
         var alphabet   = `#{alphabet}`
         var letter = `#{letter}`
+    <script>window.yaContextCb=window.yaContextCb||[]</script>
     script(src="/javascripts/learn.js", defer)
-
+    
 block content
     for sound in ['click', 'hover', 'incorrect', 'result_completed', 'result_no_mistakes', 'level_completed', 'level_completed_perfectly'].concat(rowLetters.map(rowLetter => "letters/" + rowLetter.name)).concat(Array.from({length: 9}, (_, i) => i + 1).map(i => "combo_" + i))
         audio(preload="auto")
@@ -16,6 +17,9 @@ block content
     img#x-button
     #game-container
         #game-column-container
+            div(id="yandex_rtb_R-A-1622843-2")
+            script.
+                renderYandexAdsBlock('R-A-1622843-2')
             #game-progress-bar-container
                 img#exit-button(src="/images/icons/exit.svg")
                 #game-progress-bar
@@ -38,5 +42,3 @@ block content
                 span.petals-earned +1
                 img.petals-earned-icon(src="/images/particles/petal_" + Math.ceil(Math.random() * 5) + '.svg')
                 p.petals-earned-for No mistakes
-
-        

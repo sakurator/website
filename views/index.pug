@@ -3,7 +3,6 @@ extends layout
 block head
   script(src="/javascripts/index.js", defer)  
   // Yandex.RTB
-  <script>window.yaContextCb=window.yaContextCb||[]</script>
   script(src="https://yandex.ru/ads/system/context.js", async)
 
 block content
@@ -43,6 +42,7 @@ block content
       #logo-container
         img(src="/images/logos/titled_gray.svg")#logo
         div(id="yandex_rtb_R-A-1622843-1")
-        script(src="/javascripts/libs/ya.js")
+        script.
+          renderYandexAdsBlock('R-A-1622843-1')
       img(src="/images/illustrations/sakura.svg")#sakura-illustration
 
