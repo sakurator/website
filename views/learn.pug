@@ -20,7 +20,12 @@ block content
         #game-column-container
             div(id="yandex_rtb_R-A-1622843-2")
             script.
-                renderYandexAdsBlock('R-A-1622843-2')
+                window.yaContextCb.push(() => {
+                    Ya.Context.AdvManager.render({
+                        renderTo: 'yandex_rtb_R-A-1622843-2',
+                        blockId: 'R-A-1622843-2',
+                    });
+                });
             #game-progress-bar-container
                 img#exit-button(src="/images/icons/exit.svg")
                 #game-progress-bar
