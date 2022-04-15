@@ -7,9 +7,9 @@ const prisma = new PrismaClient()
 
 
 async function seed() {
-    prisma.letters.deleteMany()
-    prisma.rows.deleteMany()
-    prisma.alphabets.deleteMany()
+    await prisma.letters.deleteMany()
+    await prisma.rows.deleteMany()
+    await prisma.alphabets.deleteMany()
 
     for(let alphabet of alphabets) {
         await prisma.alphabets.create({
