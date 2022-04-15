@@ -492,6 +492,11 @@ a {
   #game-container #game-panels {
     flex-direction: column !important;
     width: 100% !important;
+    flex-grow: 1 !important;
+  }
+  #game-container #game-panels #kana-image {
+    width: 60%;
+    height: auto;
   }
   #game-container #game-panels #options {
     width: 100% !important;
