@@ -95,7 +95,7 @@ document.querySelectorAll(".row").forEach(row => {
         transitionCircle.style.cssText = `left: ${mouse.x}px; top: ${mouse.y}px`
         document.body.appendChild(transitionCircle)
 
-        setTimeout(() => window.location.href = "/learn?alphabet=" + currentAlphabet + "&row=" + row.id.split("-")[1], 2000);
+        setTimeout(() => window.location.href = "/learn/" + currentAlphabet + "/" + (row.id.split("-")[1] == '' ? "vowels" : row.id.split("-")[1]), 2000);
     })
 })
 

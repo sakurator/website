@@ -4,6 +4,8 @@
 }
 * {
   font-family: "Golos Text VF";
+  margin: 0;
+  padding: 0;
 }
 
 html, body {
@@ -14,6 +16,14 @@ html, body {
   overflow: hidden;
   user-select: none;
   position: relative;
+}
+
+#footer {
+  margin-bottom: 3%;
+}
+
+#alphabet-switch-panel {
+  margin-top: 3%;
 }
 
 a {
@@ -40,7 +50,7 @@ a {
   }
 }
 #content-container > * {
-  padding: 0 100%/12 0;
+  padding: 8.3333333333% 0;
 }
 #content-container #left-panel {
   display: flex;
@@ -48,7 +58,7 @@ a {
   width: 40%;
   height: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 #content-container #left-panel #alphabet-switch-panel {
   width: 100%;
@@ -118,7 +128,7 @@ a {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  height: 80%;
+  height: auto;
   width: 80%;
 }
 #content-container #left-panel #rows-container .row {
@@ -214,7 +224,7 @@ a {
 }
 #content-container #right-panel #logo-container {
   padding-right: 2em;
-  padding-top: 1em;
+  padding-top: 8.3333333333%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -363,12 +373,21 @@ a {
 }
 #game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed {
   height: 100%;
-  background: linear-gradient(to right, #FEAF9F, #FE6D73);
   transition: 200ms ease-out;
 }
-#game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.in-combo {
+#game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.hiragana {
+  background: linear-gradient(to right, #FEAF9F, #FE6D73);
+}
+#game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.hiragana.in-combo {
   background: linear-gradient(to right, #f12711, #f5af19);
   box-shadow: 0 0 9px #FE6D73;
+}
+#game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.katakana {
+  background: linear-gradient(to right, #6DCBC7, #6d7f7e);
+}
+#game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.katakana.in-combo {
+  background: linear-gradient(to right, #B2FEFA, #0ED2F7);
+  box-shadow: 0 0 9px #0ED2F7;
 }
 #game-container #game-column-container #game-panels {
   padding-top: 1em;
@@ -469,6 +488,54 @@ a {
   align-items: center;
 }
 
+@media screen and (max-width: 580px) {
+  #game-container #game-panels {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+  #game-container #game-panels #options {
+    width: 100% !important;
+    justify-content: space-around;
+  }
+  #game-container #game-panels #options .option:nth-child(4n), #game-container #game-panels #options .option:nth-child(4n-1) {
+    margin-top: unset !important;
+  }
+  #game-container #game-panels #options .option:nth-child(4n-2), #game-container #game-panels #options .option:nth-child(4n-3) {
+    margin-bottom: unset !important;
+  }
+  #game-container #game-panels #options .option:nth-child(2n) {
+    margin-right: unset !important;
+  }
+  #game-container #game-panels #options .option:nth-child(2n+1) {
+    margin-left: unset !important;
+  }
+  #game-container #game-panels #panel-delimiter {
+    display: none !important;
+  }
+  #game-container #game-column-container {
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+  #game-container #game-column-container #game-progress-bar-container {
+    flex-direction: column-reverse !important;
+    align-items: flex-start !important;
+  }
+  #game-container #game-column-container #game-progress-bar-container #game-progress-bar {
+    width: 100% !important;
+  }
+  #game-container #game-column-container #game-progress-bar-container #game-progress-bar * {
+    border-radius: 0 !important;
+    height: 16px !important;
+  }
+  #game-container #game-column-container #game-progress-bar-container #exit-button {
+    margin: 32px !important;
+    width: 24px;
+    height: auto;
+  }
+  #game-container #game-column-container #title {
+    display: none;
+  }
+}
 #yandex_rtb_R-A-1622843-2 {
   width: 320px;
   height: 100px;

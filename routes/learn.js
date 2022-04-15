@@ -12,9 +12,12 @@ Object.defineProperty(String.prototype, 'capitalize', {
 });
 
 /* GET users listing. */
-router.get('/', async function(req, res, next) {
-    let alphabet = req.query.alphabet.capitalize();
-    let letter = req.query.row.toLowerCase()
+router.get('/:alphabet/:row', async function(req, res, next) {
+    let alphabet = req.params.alphabet.capitalize();
+    let letter = req.params.row.toLowerCase()
+
+    if(letter == "vowels")
+        letter = ""
 
     let rowLetters = await prisma.letters.findMany({
         where: {
@@ -36,7 +39,7 @@ router.get('/', async function(req, res, next) {
             rows: {
                 alphabets: {
                     name: {
-                        equals: req.query.alphabet.capitalize()
+                        equals: alphabet
                     },
                 },
             },
@@ -47,7 +50,7 @@ router.get('/', async function(req, res, next) {
         return res.status(404) 
 
     res.render('learn', { 
-        title: "Learning the " + req.query.alphabet + " " + (req.query.row || 'vowels') + " row",
+        title: "Learning the " + alphabet + " " + letter + " row",
         rowLetters: rowLetters,
         allLetters: allLetters,
         alphabet: alphabet,

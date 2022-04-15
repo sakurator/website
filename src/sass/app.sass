@@ -7,6 +7,8 @@
     
 *
     font-family: "Golos Text VF"
+    margin: 0
+    padding: 0
 
 html, body
     margin: 0
@@ -16,6 +18,12 @@ html, body
     overflow: hidden
     user-select: none
     position: relative
+    
+#footer
+    margin-bottom: 3%
+
+#alphabet-switch-panel
+    margin-top: 3%
 
 a
     color: $sakura
@@ -36,14 +44,14 @@ a
             transform: scale(1)
     animation: content-container-reveal 800ms cubic-bezier(1, .2, 0, 1)
     & > *
-        padding: 0 100% / 12 0
+        padding: calc(100% / 12) 0
     #left-panel
         display: flex
         flex-direction: column
         width: 40%
         height: 100%
         align-items: center
-        justify-content: center
+        justify-content: space-around
         #alphabet-switch-panel
             width: 100%
             display: flex
@@ -104,7 +112,7 @@ a
             flex-wrap: wrap
             align-items: center
             justify-content: center
-            height: 80%
+            height: auto
             width: 80%
             .row
                 display: flex
@@ -186,7 +194,7 @@ a
         justify-content: space-between
         #logo-container
             padding-right: 2em
-            padding-top: 1em
+            padding-top: calc(100% / 12)
             display: flex
             flex-direction: column
             align-items: flex-end
@@ -304,11 +312,17 @@ a
                     background-color: $gray
                     #game-progress-bar-completed
                         height: 100%
-                        background: $sakura-gradient
                         transition: 200ms ease-out
-                        &.in-combo
-                            background: $combo-gradient
-                            box-shadow: 0 0 9px $sakura
+                        &.hiragana
+                            background: $sakura-gradient
+                            &.in-combo
+                                background: $combo-gradient-hiragana
+                                box-shadow: 0 0 9px $sakura
+                        &.katakana
+                            background: $turquoise-gradient
+                            &.in-combo
+                                background: $combo-gradient-katakana
+                                box-shadow: 0 0 9px #0ED2F7
         $panel-size: 12em
         $space-between-options: .5em
         #game-panels
@@ -389,6 +403,46 @@ a
     flex-direction: column
     justify-content: center
     align-items: center
+
+@media screen and (max-width: 580px)
+    #game-container
+        #game-panels
+            flex-direction: column !important
+            width: 100% !important
+            #options
+                width: 100% !important
+                justify-content: space-around
+                .option
+                    // border-radius: 0
+                    // box-shadow: unset !important
+                    // border: 1px solid #aaa
+                    &:nth-child(4n), &:nth-child(4n - 1)
+                        margin-top: unset !important
+                    &:nth-child(4n - 2), &:nth-child(4n - 3)
+                        margin-bottom: unset !important
+                    &:nth-child(2n)
+                        margin-right: unset !important
+                    &:nth-child(2n + 1)
+                        margin-left: unset !important
+            #panel-delimiter
+                display: none !important
+        #game-column-container
+            justify-content: space-between !important
+            width: 100% !important
+            #game-progress-bar-container
+                flex-direction: column-reverse !important
+                align-items: flex-start !important  
+                #game-progress-bar
+                    width: 100% !important
+                    *
+                        border-radius: 0 !important
+                        height: 16px !important
+                #exit-button
+                    margin: 32px !important
+                    width: 24px
+                    height: auto
+            #title
+                display: none
 
 #yandex_rtb_R-A-1622843-2
     width: 320px
