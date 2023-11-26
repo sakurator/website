@@ -5,16 +5,43 @@ block head
     script.
         var allLetters = JSON.parse(`!{JSON.stringify(allLetters, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
         var rowLetters = JSON.parse(`!{JSON.stringify(rowLetters, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
-        var alphabet   = `#{alphabet}`
+        var row = JSON.parse(`!{JSON.stringify(row, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
+        var alphabet = `#{alphabet}`
         var letter = `#{letter}`
     //- <script>window.yaContextCb=window.yaContextCb||[]</script>
     //- script(src="https://yandex.ru/ads/system/context.js", async)
     script(src="/javascripts/learn.js", defer)
     
 block content
-    for sound in ['click', 'hover', 'incorrect', 'result_completed', 'result_no_mistakes', 'level_completed', 'level_completed_perfectly'].concat(rowLetters.map(rowLetter => "letters/" + rowLetter.name)).concat(Array.from({length: 9}, (_, i) => i + 1).map(i => "combo_" + i))
+    for sound in ['click', 'hover', 'quit', 'game_started', 'incorrect', 'result_completed', 'result_no_mistakes', 'level_completed', 'level_completed_perfectly'].concat(rowLetters.map(rowLetter => "letters/" + rowLetter.name)).concat(Array.from({length: 9}, (_, i) => i + 1).map(i => "combo_" + i))
         audio(preload="auto")
             source(src="/sounds/" + sound + ".mp3", type="audio/mpeg")
+    #introduction-container
+        for letter in rowLetters
+            .letter-introduction(data-letter=letter.name)
+                img.letter-introduction-image(src="/images/letters/" + alphabet + "_" + letter.name + ".svg")
+                span.letter-introduction-name #{letter.name}
+
+    #row-completed(data-alphabet=alphabet)
+        svg#row-completed-medal(xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewbox='0 0 1622.3 716.73')
+            defs
+                linearGradient(id='golden-gradient' x1='635.38' y1='639.59' x2='976.99' y2='285.84' gradientunits='userSpaceOnUse')
+                    stop(offset='0' stop-color='#ffcb77')
+                    stop(offset='.41' stop-color='#ffdfab')
+                    stop(offset='1' stop-color='#ffbf57')
+            path.row-completed-medal-ruby(d='m1469.54,0c-68.86,41.15-140.98,79.44-215.63,114.43-140.58,65.89-291.41,120.77-448.49,163.2-163.35-43.89-319.16-101.77-463.28-172.11C275.59,73.04,211.3,37.73,149.81,0H0c94.81,66.03,197.66,126.25,306.17,179.21,152,74.19,316.45,134.91,488.79,180.49l10.51,2.78,10.51-2.8c165.56-44.05,324.61-101.58,472.72-171.01,118.16-55.38,230.28-118.81,333.6-188.68h-152.77Z')
+            path.row-completed-medal-gold(d='m1032.06,567.74v-210.05c0-15.71-8.38-30.22-21.98-38.08l-181.91-105.03c-13.6-7.85-30.36-7.85-43.97,0l-181.91,105.03c-13.6,7.85-21.98,22.37-21.98,38.08v210.05c0,15.71,8.38,30.22,21.98,38.08l181.91,105.03c13.6,7.85,30.36,7.85,43.97,0l181.91-105.03c13.6-7.85,21.98-22.37,21.98-38.08Z')
+            circle.row-completed-medal-ruby(cx='804.95' cy='245' r='13.34')
+            circle.row-completed-medal-ruby(cx='612.12' cy='572.18' r='13.34')
+            circle.row-completed-medal-ruby(cx='621.13' cy='348.95' r='13.34')
+            circle.row-completed-medal-ruby(cx='991.91' cy='355.67' r='13.34')
+            circle.row-completed-medal-ruby(cx='991.91' cy='572.18' r='13.34')
+            circle.row-completed-medal-ruby(cx='808.21' cy='685.02' r='13.34')
+
+        #row-completed-text-container
+            span#row-completed-title Congratulations
+            span#row-completed-subtitle You completed #{alphabet} #{row.name}!
+
     #game-container
         #game-column-container
             //- div(id="yandex_rtb_R-A-1622843-2")
@@ -41,9 +68,9 @@ block content
         #game-results-container
             .game-result#game-result-completed
                 span.petals-earned +1
-                img.petals-earned-icon(src="/images/particles/petal_" + Math.ceil(Math.random() * 5) + '.svg')
+                img.petals-earned-icon(src="/images/particles/" + (alphabet === "Hiragana" ? "petal" : "leaf") + "_" + Math.ceil(Math.random() * 5) + '.svg')
                 p.petals-earned-for Game completed
             .game-result#game-result-no-mistakes
                 span.petals-earned +1
-                img.petals-earned-icon(src="/images/particles/petal_" + Math.ceil(Math.random() * 5) + '.svg')
+                img.petals-earned-icon(src="/images/particles/" + (alphabet === "Hiragana" ? "petal" : "leaf") + "_" + Math.ceil(Math.random() * 5) + '.svg')
                 p.petals-earned-for No mistakes
