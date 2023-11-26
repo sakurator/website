@@ -2,6 +2,8 @@ extends layout
 
 block head
   script(src="/javascripts/index.js", defer)  
+  script.
+    var rows = JSON.parse(`!{JSON.stringify(rows, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
   //- Yandex.RTB
   //- <script>window.yaContextCb=window.yaContextCb||[]</script>
   //- script(src="https://yandex.ru/ads/system/context.js", async)
@@ -21,24 +23,27 @@ block content
       #rows-container
         for row in rows
           .row(id="row-" + row.letter)
-            .row-card
+            .row-card(class=alphabet.toLowerCase())
               img.row-kana(src="/images/letters/" + alphabet + "_" + row.letter + "a" + ".svg")
               .row-progress
                 .row-progress-full
-                  .row-progress-completed.hiragana(id="progress-" + row.letter + "-" + row.petals_to_complete)
+                  .row-progress-completed.hiragana(id="progress-" + row.letter + "-" + row.petalsToComplete)
             .row-description
               .row-title-container
-                img.row-completed-icon(id="completed-" + row.letter + "-" + row.petals_to_complete, src="/images/icons/completed.svg")
+                img.row-completed-icon(id="completed-" + row.letter + "-" + row.petalsToComplete, src="/images/icons/completed.svg")
                 span.row-title= row.name
-              span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petals_to_complete)
+              span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petalsToComplete)
+                img(src="/images/particles/petal_1.svg")
       span#footer 
-        | © Sakurator 2022 by 
+        | © Sakurator 2023 by 
         a(href="https://github.com/anafro") anafro
         | . 
         a(href="/terms-of-use") Terms of use 
         | | 
-        a(href="/policy") Privacy policy
-        |. 
+        a(href="/policy") Privacy policy 
+        | | Click 
+        button#progress-reset-button here 
+        |  to reset your progress. 
     #right-panel
       #logo-container
         img(src="/images/logos/titled_gray.svg")#logo
@@ -46,4 +51,9 @@ block content
         //- script.
         //-   renderYandexAdsBlock('R-A-1622843-1')
       img(src="/images/illustrations/sakura.svg")#sakura-illustration
-
+  #progress-reset-container
+    span#progress-reset-title You sure you wanna reset your progress?
+    img#progress-reset-illustration(src="/images/illustrations/trash-can.svg")
+    #progress-reset-buttons-container
+      button#reset-progress-button Yes, reset my progress (no undo)
+      button#keep-progress-button No, keep it
