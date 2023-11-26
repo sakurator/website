@@ -37,12 +37,12 @@ a
     align-items: center
     @keyframes content-container-reveal
         from
-            transform: scale(1.05)
+            transform: scale(1.01)
             opacity: 0
         to
             opacity: 1
             transform: scale(1)
-    animation: content-container-reveal 800ms cubic-bezier(1, .2, 0, 1)
+    animation: content-container-reveal 400ms ease-out
     & > *
         padding: calc(100% / 12) 0
     #left-panel
@@ -83,8 +83,7 @@ a
                     right: 0
                     bottom: 0
                     background-color: $sakura
-                    -webkit-transition: .4s
-                    transition: .4s
+                    transition: .2s
                     border-radius: 50rem
                     &:before
                         position: absolute
@@ -94,9 +93,9 @@ a
                         left: 4px
                         bottom: 4px
                         background-color: white
-                        -webkit-transition: .4s
-                        transition: .4s
+                        transition: .2s
                         border-radius: 50rem
+                        transition-timing-function: ease-in-out
 
             .alphabet-switch-title
                 font-size: 24px
@@ -124,16 +123,24 @@ a
                 cursor: pointer
                 &:hover 
                     .row-card
-                        transform: scale(1.07) rotate(5deg)
+                        transform: scale(1.07) rotate(2deg)
+                        box-shadow: 35px 35px 70px #0002
+                        &.hiragana
+                            border: 1px $sakura solid
+                        &.katakana
+                            border: 1px $turquoise solid
+                    .row-kana
+                        opacity: 0.85
                     .row-description
-                        opacity: 0.8
-                        transform: scale(0.95)
+                        opacity: 1
                 &:active
                     .row-card
                         transform: scale(0.7) rotate(-3deg)
                 .row-card
-                    width: 80%
-                    height: 80%
+                    border: 0px solid transparent
+                    width: 65%
+                    height: 65%
+                    aspect-ratio: 1 / 1
                     padding: 5% 2.5%
                     display: flex
                     flex-direction: column
@@ -141,8 +148,9 @@ a
                     align-items: center
                     border-radius: 15px
                     box-shadow: 1px 1px 8px #0002
-                    transition: 200ms ease-out
+                    transition: 150ms ease-in
                     z-index: 10
+                    box-sizing: border-box
                     .row-kana
                         width: 70%
                         height: auto
@@ -178,8 +186,16 @@ a
                     .row-title
                         font-size: 12px
                     .row-subtitle
-                        font-size: 8px
+                        display: flex
+                        flex-direction: row
+                        align-items: center
+                        column-gap: 0.33em
+                        justify-content: center
+                        font-size: 11px
                         color: $gray
+                        & > img
+                            width: 1em
+                            aspect-ratio: 1 / 1
         #footer
             text-align: center
             font-size: 12px
@@ -205,7 +221,7 @@ a
                 height: 24px
                 margin-bottom: 24px
         #sakura-illustration
-            width: 70%
+            width: 60%
             height: auto
     @media only screen and (max-width: 1030px)
         #right-panel
@@ -235,18 +251,35 @@ a
     from
         opacity: 1
         transform: scale(1)
+    50%
+        opacity: 0.5
+        transform: scale(0.98)
     to
         opacity: 0
-        transform: scale(1.5)
+        transform: scale(1.15)
+
+@keyframes game-container-fade-in
+    from
+        opacity: 0
+        transform: scale(0.94)
+    60%
+        opacity: 1
+        transform: scale(1.005)
+    to
+        opacity: 1
+        transform: scale(1)
 
 #game-container
-    display: flex
+    display: none
     align-items: center
     justify-content: center
     flex-direction: column
     width: 100%
     height: 100%
     $result-title-size: 64px
+    &.visible
+        display: flex
+        animation: game-container-fade-in 300ms forwards ease-in-out
     #game-results-container
         .game-result
             display: none
@@ -288,7 +321,7 @@ a
         width: 50%
         height: 100%
         &.completed
-            animation: game-completed 700ms ease-in-out
+            animation: game-completed 300ms ease-in-out
             opacity: 0
             transform: scale(1.5)
         #game-progress-bar-container
@@ -379,6 +412,8 @@ a
         font-size: 14px
         color: $gray
         text-transform: lowercase
+        &::first-letter
+            text-transform: uppercase
 
 @keyframes petal-rotation
     from
@@ -388,7 +423,9 @@ a
 
 .petal
     position: absolute
-    animation: petal-rotation 1.2s linear infinite 
+    animation: petal-rotation 2s ease-in-out infinite alternate-reverse 
+    z-index: 1000
+    pointer-events: none
 
 #document-container
     width: 90%
@@ -448,9 +485,192 @@ a
             #title
                 display: none
 
+#introduction-container
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 100%
+    column-gap: 3em
+    .letter-introduction
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
+        display: none
+        .letter-introduction-image
+            width: 8em
+            aspect-ratio: 1 / 1
+        .letter-introduction-name
+            font-size: 2em
+        &.introducing
+            animation: letter-introduction 400ms ease-in-out forwards, letter-introduction-out 600ms 2000ms ease-in-out forwards
+            .letter-introduction-image
+                animation: letter-image-introduction-jump 400ms ease-in-out forwards
+            .letter-introduction-name
+                animation: letter-name-introduction-jump 400ms ease-in-out forwards
+
+@keyframes letter-introduction
+    from
+        opacity: 0
+
+    to
+        opacity: 1
+
+@keyframes letter-introduction-out
+    from
+        opacity: 1
+        transform: scale(1) rotate(0)
+
+    85%
+        transform: scale(1.1) rotate(-5deg)
+        opacity: 1
+
+    to
+        transform: scale(0.5) rotate(45deg)
+        opacity: 0
+
+@keyframes letter-image-introduction-jump
+    from
+        transform: scale(1)
+
+    15%
+        transform: scale(1.1, 1.2) rotate(4deg) translateY(-0.33em)
+
+    to
+        transform: scale(1)
+
+@keyframes letter-name-introduction-jump
+    from
+        opacity: 1
+
+    15%
+        opacity: 0.3
+
+    to
+        opacity: 1
+
+#row-completed
+    width: 100%
+    height: 100%
+    display: none
+    align-items: center
+    justify-content: space-between
+    flex-direction: column
+    &.visible
+        display: flex
+        #row-completed-medal
+            width: 70%
+            animation: medal-drop 300ms, medal-ambience 2s 4 300ms alternate ease-in-out, medal-removal 400ms 8600ms ease-in-out forwards
+
+@keyframes medal-drop
+    from
+        transform: translateY(-100%)
+    40%
+        transform: translateY(0) skewX(5deg)
+    60%
+        transform: translateY(-5%) skewX(-3deg)
+    to
+        transform: translateY(0)
+
+@keyframes medal-ambience
+    from
+        transform: translateY(0)
+    to
+        transform: translateY(-2.5%) scale(1.03)
+
+@keyframes medal-removal
+    from
+        transform: translateY(0)
+    to
+        transform: translateX(40%) translateY(-200%) skew(-40deg)
+
+#row-completed-text-container
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    margin-bottom: 4em
+    opacity: 0
+    animation: row-completed-text-fade-in 1000ms 1000ms ease-in-out forwards, row-completed-text-fade-out 1000ms 7600ms forwards
+
+@keyframes row-completed-text-fade-in
+    from
+        opacity: 0
+        margin-bottom: 0em
+
+    to
+        opacity: 1
+        margin-bottom: 4em
+
+@keyframes row-completed-text-fade-out
+    from
+        opacity: 1
+    to
+        opacity: 0
+
+#row-completed-title
+    font-weight: 500
+    font-size: 1.6em
+
+#row-completed-subtitle
+    font-weight: 0
+    opacity: 0.7
+
+#row-completed[data-alphabet="Hiragana"] .row-completed-medal-ruby
+    fill: $sakura
+
+#row-completed[data-alphabet="Katakana"] .row-completed-medal-ruby
+    fill: $turquoise
+
+.row-completed-medal-ruby, .row-completed-medal-gold
+    stroke-width: 0px
+
+.row-completed-medal-gold
+    fill: url(#golden-gradient)
+    // fill: linear-gradient(to right, #ffcb77 0%, #ffdfab 40%, #ffbf57 100%)
+
+#progress-reset-button
+    all: unset
+    color: $sakura
+    cursor: pointer
+
 #yandex_rtb_R-A-1622843-2
     width: 320px
     height: 100px
+
+#progress-reset-container
+    display: none
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 100%
+    height: 100%
+    row-gap: 6em
+    &.visible
+        display: flex
+    #progress-reset-title
+        font-weight: 500
+        font-size: 1.5em
+    #progress-reset-illustration
+        width: 12em
+    #progress-reset-buttons-container
+        display: flex
+        flex-direction: column
+        row-gap: 1em
+        align-items: center
+        jusify-content: center
+        button
+            all: unset
+            cursor: pointer
+        #reset-progress-button
+            background: $sakura
+            color: white
+            padding: 0.5em 1em
+            border-radius: 0.25em
+        #keep-progress-button
+            color: $gray
+            text-decoration: underline
 
 // @media only screen and (min-width: 801px)
 //     .row-card
