@@ -7,29 +7,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model alphabets {
-  id   BigInt @id @unique(map: "id") @default(autoincrement())
-  name String @unique(map: "name") @db.VarChar(32)
-  rows rows[]
+model User {
+  id         Int                @id @default(autoincrement())
+  name       String             @unique
+  email      String             @unique
+  password   String
+  progresses AlphabetProgress[]
+
+  @@map("users")
 }
 
-model letters {
-  id     BigInt @id @unique(map: "id") @default(autoincrement())
-  name   String @db.VarChar(3)
-  row_id BigInt
-  rows   rows   @relation(fields: [row_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "letters_ibfk_1")
+model AlphabetProgress {
+  id     Int  @id @default(autoincrement())
+  userId Int  @map("user_id")
+  user   User @relation(fields: [userId], references: [id])
+  perals Int  @default(0)
 
-  @@index([row_id], map: "row_id")
+  @@map("alphabet_progresses")
 }
 
-model rows {
-  id                 BigInt    @id @unique(map: "id") @default(autoincrement())
-  name               String    @db.VarChar(32)
-  letter             String    @db.VarChar(32)
-  petals_to_complete Int       @default(500)
-  alphabet_id        BigInt
-  alphabets          alphabets @relation(fields: [alphabet_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rows_ibfk_1")
-  letters            letters[]
+model Alphabet {
+  id   Int    @id @default(autoincrement())
+  name String
+  rows Row[]
 
-  @@index([alphabet_id], map: "alphabet_id")
+  @@map("alphabets")
+}
+
+model Row {
+  id               Int      @id @default(autoincrement())
+  name             String
+  letter           String
+  petalsToComplete Int      @map("petals_to_complete")
+  alphabetId       Int      @map("alphabet_id")
+  alphabet         Alphabet @relation(fields: [alphabetId], references: [id])
+  letters          Letter[]
+
+  @@map("rows")
+}
+
+model Letter {
+  id     Int    @id @default(autoincrement())
+  name   String
+  rowId  Int    @map("row_id")
+  row    Row    @relation(fields: [rowId], references: [id])
+
+  @@map("letters")
 }
