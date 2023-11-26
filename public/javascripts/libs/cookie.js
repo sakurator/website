@@ -1,23 +1,30 @@
-/**
- * Get the value of a cookie
- * Source: https://gist.github.com/wpsmith/6cf23551dd140fb72ae7
- * @param  {String} name  The name of the cookie
- * @return {String}       The cookie value
- */
-function getCookie(name) {
-	let value = `; ${document.cookie}`;
-	let parts = value.split(`; ${name}=`);
-	if (parts.length === 2) 
-		return parts.pop().split(';').shift();
-	else
-		return 0
+function setCookie(name, value, cookieLifetimeDays = 365) {
+	const date = new Date(
+		Date.now() + cookieLifetimeDays * 24 * 60 * 60 * 1000
+	);
+	const expires = "; expires=" + date.toUTCString();
+
+	document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-/**
- * Sets the value of cookie with 1 year lifetime
- * @param {String} name   The name of cookie
- * @param {String} value  The cookie value  
- */
-function setCookie(name, value) {
-	document.cookie = `${name}=${value}; max-age=${60 * 60 * 24 * 365}`;
+function getCookie(name, defaultIfNoCookie = null) {
+	const nameEQ = name + "=";
+	const ca = document.cookie.split(";");
+	for (let i = 0; i < ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) == " ") {
+			c = c.substring(1, c.length);
+		}
+
+		if (c.indexOf(nameEQ) == 0) {
+			return c.substring(nameEQ.length, c.length);
+		}
+	}
+
+	return defaultIfNoCookie;
+}
+
+function eraseCookie(name) {
+	document.cookie =
+		name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 }
