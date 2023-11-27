@@ -109,23 +109,11 @@ document.querySelectorAll(".option").forEach((option) => {
 
 				let rowScoreCookieTag = alphabet.toLowerCase() + "_" + letter;
 
-				console.log(
-					rowScoreCookieTag,
-					getCookie(rowScoreCookieTag),
-					game.punished
-				);
-
 				setCookie(
 					rowScoreCookieTag,
 					parseInt(getCookie(rowScoreCookieTag, 0)) +
 						1 +
 						(game.punished ? 0 : 1)
-				);
-
-				console.log(
-					rowScoreCookieTag,
-					getCookie(rowScoreCookieTag),
-					game.punished
 				);
 
 				gameContainer.classList.add("completed");
