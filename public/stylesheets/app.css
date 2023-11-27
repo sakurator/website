@@ -775,6 +775,30 @@ a {
   height: 100px;
 }
 
+@keyframes progress-reset-container-fade-in {
+  from {
+    opacity: 0;
+    transform: rotate(3deg) scale(0.95);
+  }
+  50% {
+    opacity: 0.5;
+    transform: rotate(-1deg) scale(1.02);
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes progress-reset-illustration-fade-in {
+  from {
+    transform: rotate(3deg) scale(0.9);
+  }
+  50% {
+    transform: rotate(-1deg) scale(1.05);
+  }
+  to {
+    opacity: 1;
+  }
+}
 #progress-reset-container {
   display: none;
   flex-direction: column;
@@ -786,6 +810,10 @@ a {
 }
 #progress-reset-container.visible {
   display: flex;
+  animation: progress-reset-container-fade-in 300ms ease-in-out;
+}
+#progress-reset-container.visible #progress-reset-illustration {
+  animation: progress-reset-illustration-fade-in 400ms ease-in-out;
 }
 #progress-reset-container #progress-reset-title {
   font-weight: 500;

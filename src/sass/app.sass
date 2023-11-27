@@ -639,6 +639,24 @@ a
     width: 320px
     height: 100px
 
+@keyframes progress-reset-container-fade-in
+    from
+        opacity: 0
+        transform: rotate(3deg) scale(0.95)
+    50%
+        opacity: 0.5
+        transform: rotate(-1deg) scale(1.02)
+    to
+        opacity: 1
+
+@keyframes progress-reset-illustration-fade-in
+    from
+        transform: rotate(3deg) scale(0.90)
+    50%
+        transform: rotate(-1deg) scale(1.05)
+    to
+        opacity: 1
+
 #progress-reset-container
     display: none
     flex-direction: column
@@ -649,6 +667,9 @@ a
     row-gap: 6em
     &.visible
         display: flex
+        animation: progress-reset-container-fade-in 300ms ease-in-out
+        #progress-reset-illustration
+            animation: progress-reset-illustration-fade-in 400ms ease-in-out
     #progress-reset-title
         font-weight: 500
         font-size: 1.5em
