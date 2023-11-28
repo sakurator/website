@@ -374,13 +374,11 @@ a
             margin: 2em 5em
             background-color: $gray
         #options
-            display: flex
-            align-content: center
-            justify-content: space-between
-            flex-wrap: wrap
+            display: grid
+            grid-template-rows: 1fr 1fr
+            grid-template-columns: 1fr 1fr 
+            gap: 1.5em
             .option
-                width: $panel-size / 2 - $space-between-options * 2 
-                height: 4.5rem
                 display: flex
                 align-content: center
                 justify-content: space-evenly
@@ -389,18 +387,9 @@ a
                 box-shadow: 2px 3px 8px #0003
                 cursor: pointer
                 transition: 300ms
+                font-size: 2.25em
                 &:hover
                     transform: scale(1.05) rotate(5deg)
-                &:nth-child(4n), &:nth-child(4n - 1)
-                    margin-top: $space-between-options
-                &:nth-child(4n - 2), &:nth-child(4n - 3)
-                    margin-bottom: $space-between-options
-                &:nth-child(2n)
-                    margin-right: $space-between-options
-                &:nth-child(2n + 1)
-                    margin-left: $space-between-options
-                .option-letter
-                    font-size: 2.25em
                 &.revealed
                     cursor: not-allowed
                     &.correct
@@ -415,15 +404,15 @@ a
         &::first-letter
             text-transform: uppercase
 
-@keyframes petal-rotation
+@keyframes particle-rotation
     from
         transform: rotate(0deg)
     to
         transform: rotate(360deg)
 
-.petal
+.particle
     position: absolute
-    animation: petal-rotation 2s ease-in-out infinite alternate-reverse 
+    animation: particle-rotation 2s ease-in-out infinite alternate-reverse 
     z-index: 1000
     pointer-events: none
 

@@ -11,3 +11,15 @@ function classIf(element, className, condition) {
 function classUnless(element, className, condition) {
 	return classIf(element, className, !condition);
 }
+
+function select(selector) {
+	return [...document.querySelectorAll(selector)];
+}
+
+function elements(className) {
+	return select(`.${className}`);
+}
+
+function element(id) {
+	return document.getElementById(id);
+}

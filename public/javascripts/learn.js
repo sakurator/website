@@ -1,281 +1,271 @@
 const MAX_COMBO = 9;
 
-let inGame = true;
-let rightAnswer = "?";
-let lastAnswer = undefined;
-let game = {
-	combo: 1,
-	total: 500,
-	punishment: 5,
-	points: 0,
-	punished: false,
-};
-let rowWasCompleted = countPetals() >= row.petalsToComplete;
-let particleName = alphabet === "Hiragana" ? "petal" : "leaf";
+class Game {
+	constructor() {
+		this.combo = 1;
+		this.total = 500;
+		this.punishment = 5;
+		this.points = 20;
+		this.flawless = true;
+		this.running = true;
+		this.particles = alphabetParticle(alphabet);
+		this.wasCompleted = petals(alphabet, letter) >= row.petalsToComplete;
+		this.progressBarEl = element("game-progress-bar-completed");
+		this.letterImageEl = element("kana-image");
+		this.gameColumnContainerEl = element("game-column-container");
+		this.resultCompletedEl = element("game-result-completed");
+		this.resultNoMistakesEl = element("game-result-no-mistakes");
+		this.exitButtonEl = element("exit-button");
+		this.optionEls = elements("option");
+		this.gameColumnContainerEl = element("game-column-container");
+		this.introductionContainerEl = element("introduction-container");
+		this.letterIntroductionEls = elements("letter-introduction");
+		this.gameContainerEl = element("game-container");
+		this.rowCompletedEl = element("row-completed");
 
-function backHome() {
-	window.location.href = "/";
-}
-
-function countPetals() {
-	return parseInt(getCookie(`${alphabet}_${letter}`.toLowerCase(), 0));
-}
-
-function updateProgressBar() {
-	const progressBar = document.getElementById("game-progress-bar-completed");
-	progressBar.style.width = (100 * game.points) / game.total + "%";
-
-	if (game.combo == MAX_COMBO) progressBar.classList.add("in-combo");
-	else progressBar.classList.remove("in-combo");
-}
-
-function updateTask() {
-	let letterImage = document.getElementById("kana-image");
-	let options = document.querySelectorAll(".option-letter");
-
-	let letters = [...rowLetters];
-	for (
-		var currentIndex = letters.length - 1;
-		currentIndex > 0;
-		currentIndex--
-	) {
-		let swappageIndex = Math.floor(Math.random() * (currentIndex + 1));
-		let swappageBuffer = letters[currentIndex];
-		letters[currentIndex] = letters[swappageIndex];
-		letters[swappageIndex] = swappageBuffer;
+		this.#registerEvents();
 	}
 
-	letters = letters.slice(0, 4);
-
-	do {
-		rightAnswer = letters[Math.floor(Math.random() * options.length)].name;
-	} while (lastAnswer === rightAnswer);
-
-	lastAnswer = rightAnswer;
-
-	for (let i = 0, option; (option = options[i]); i++) {
-		option.innerHTML = letters[i].name;
+	get petals() {
+		return getPetals(alphabet, letter);
 	}
 
-	letterImage.src =
-		"/images/letters/" + alphabet + "_" + rightAnswer + ".svg";
-}
-
-/**************************************************************************************************
- *                                        Option events                                           *
- **************************************************************************************************/
-document.querySelectorAll(".option").forEach((option) => {
-	option.addEventListener("mouseenter", () => play("hover"));
-
-	option.addEventListener("click", async (event) => {
-		if (!inGame) return;
-
-		let mouse = { x: event.clientX, y: event.clientY };
-
-		if (rightAnswer === option.children[0].innerHTML) {
-			for (var i = 0; i < game.combo * 2; i++)
-				createPetal(
-					mouse,
-					game.combo * 2.5 * Math.random() + 1,
-					particleName
-				);
-
-			play("letters/" + rightAnswer);
-
-			if (game.points + game.combo < game.total) {
-				game.points += Math.round(Math.pow(game.combo, 1.3));
-
-				play("combo_" + game.combo);
-
-				updateTask();
-
-				if (game.combo < MAX_COMBO) game.combo++;
-			} else {
-				play(
-					game.punished
-						? "level_completed"
-						: "level_completed_perfectly"
-				);
-				inGame = false;
-				let gameContainer = document.getElementById(
-					"game-column-container"
-				);
-				let resultCompleted = document.getElementById(
-					"game-result-completed"
-				);
-				let resultNoMistakes = document.getElementById(
-					"game-result-no-mistakes"
-				);
-
-				let rowScoreCookieTag = alphabet.toLowerCase() + "_" + letter;
-
-				setCookie(
-					rowScoreCookieTag,
-					parseInt(getCookie(rowScoreCookieTag, 0)) +
-						1 +
-						(game.punished ? 0 : 1)
-				);
-
-				gameContainer.classList.add("completed");
-
-				await sleep(1200);
-
-				gameContainer.remove();
-				resultCompleted.classList.add("shown");
-
-				await sleep(640);
-
-				play("result_completed");
-				for (var i = 0; i < 30; i++)
-					createPetal(
-						{ x: window.innerWidth / 2, y: window.innerHeight / 2 },
-						20,
-						particleName
-					);
-
-				await sleep(960);
-
-				resultCompleted.remove();
-
-				if (!game.punished) {
-					resultNoMistakes.classList.add("shown");
-
-					await sleep(640);
-
-					play("result_no_mistakes");
-					for (var i = 0; i < 30; i++)
-						createPetal(
-							{
-								x: window.innerWidth / 2,
-								y: window.innerHeight / 2,
-							},
-							20,
-							particleName
-						);
-
-					await sleep(960);
-
-					resultNoMistakes.remove();
-				}
-
-				await sleep(2000);
-
-				if (countPetals() >= row.petalsToComplete && !rowWasCompleted) {
-					congratulateWithRowCompletion();
-				} else {
-					backHome();
-				}
-			}
+	run() {
+		if (this.petals === 0) {
+			this.introduceLetters();
 		} else {
-			game.punished = true;
-			game.points -=
-				game.points - (MAX_COMBO - game.combo) >= 0
-					? MAX_COMBO - game.combo
-					: game.points;
-
-			play("incorrect");
-			game.combo = 1;
+			this.startGame();
 		}
+	}
 
-		updateProgressBar();
-	});
-});
+	get pointsAward() {
+		return Math.round(Math.pow(this.combo, 1.3));
+	}
 
-/**************************************************************************************************
- *                                      Exit button event                                         *
- **************************************************************************************************/
-document
-	.getElementById("exit-button")
-	.addEventListener("click", async (event) => {
-		if (!inGame) return;
+	get finished() {
+		return !this.running;
+	}
 
-		play("quit");
+	set finished(newFinished) {
+		this.running = !newFinished;
+	}
 
-		inGame = false;
-		document
-			.getElementById("game-column-container")
-			.classList.add("completed");
+	get enoughPoints() {
+		return this.points >= this.total;
+	}
+
+	get needsCongratulations() {
+		return petals(alphabet, letter) >= row.petalsToComplete && !this.wasCompleted;
+	}
+
+	increaseCombo() {
+		if (this.combo < MAX_COMBO) {
+			this.combo += 1;
+		}
+	}
+
+	isOptionCorrect(option) {
+		return this.rightAnswer === option.getAttribute("data-romaji");
+	}
+
+	isOptionIncorrect(option) {
+		return !this.isOptionCorrect(option);
+	}
+
+	#registerEvents() {
+		this.optionEls.forEach((option) => {
+			option.addEventListener("mouseenter", () => play("hover"));
+			option.addEventListener("click", async (event) => {
+				if (this.finished) {
+					return;
+				}
+
+				if(this.isOptionIncorrect(option)) {
+					return this.punish();
+				}
+
+				const mousePosition = { x: event.clientX, y: event.clientY };
+				this.particles.splash(mousePosition, this.combo);
+				this.points += this.pointsAward;
+
+				if (this.enoughPoints) {
+					await this.finishGame();
+					await this.showCompletionResult();
+					await this.showFlawlessResultIfDeserves();
+					await this.congratulateWithRowCompletionIfDeserves();
+				} else {
+					this.answeredCorrect();
+				}
+
+			});
+		});
+
+		this.exitButtonEl.addEventListener("click", async (event) => {
+			if (this.finished) {
+				return;
+			}
+
+			play("exit");
+
+			this.finished = true;
+			this.gameColumnContainerEl.classList.add("completed");
+
+			await sleep(1200);
+
+			home();
+		});
+	}
+
+	answeredCorrect() {
+		play(`combo_${this.combo}`);
+		this.sayLetter();
+		this.increaseCombo();
+		this.next();
+		this.updateProgressBar();
+	}
+
+	punish() {
+		this.flawless = false;
+		this.points -= this.points - (MAX_COMBO - this.combo) >= 0
+				? MAX_COMBO - this.combo
+				: this.points;
+
+		play("incorrect");
+		this.combo = 1;
+		this.updateProgressBar();
+	}
+
+	sayLetter() {
+		sayLetter(this.rightAnswer);
+	}
+
+	async congratulateWithRowCompletionIfDeserves() {
+		await sleep(2000);
+		if (this.needsCongratulations) {
+			this.congratulateWithRowCompletion();
+		} else {
+			home();
+		}
+	}
+
+	async finishGame() {
+		play(`level_completed${this.flawless ? "_perfectly" : ""}`);
+		addPetals(alphabet, letter, 1 + (this.flawless ? 1 : 0));
+		this.finished = true;
+		this.gameColumnContainerEl.classList.add("completed");
 
 		await sleep(1200);
+		this.gameColumnContainerEl.remove();
+	}
 
-		backHome();
-	});
+	async showCompletionResult() {
+		this.resultCompletedEl.classList.add("shown");
 
-/**************************************************************************************************
- *                                       Letter introduction                                      *
- **************************************************************************************************/
+		await sleep(640);
+		play("result_completed");
+		this.particles.splash(createCenterPosition(), 30, 20);
 
-function startGame() {
-	play("game_started");
+		await sleep(960);
+		this.resultCompletedEl.remove();	
+	}
 
-	document.getElementById("introduction-container").style.display = "none";
-	document.getElementById("game-container").classList.add("visible");
-	updateProgressBar();
-	updateTask();
-}
+	async showFlawlessResultIfDeserves() {
+		if (this.flawless) {
+			this.resultNoMistakesEl.classList.add("shown");
 
-function introduceLetters() {
-	const letterIntroductionEls = document.querySelectorAll(
-		".letter-introduction"
-	);
+			await sleep(640);
+			play("result_no_mistakes");
+			this.particles.splash(createCenterPosition(), 30, 20);
 
-	letterIntroductionEls.forEach((letter, index) => {
-		setTimeout(() => {
-			letter.style.display = "flex";
-			letter.classList.add("introducing");
-			play("letters/" + letter.getAttribute("data-letter"));
+			await sleep(960);
+			this.resultNoMistakesEl.remove();
+		}
+	}
 
-			for (let i = 0; i < 7; i++) {
-				createPetal(
+	get progress() {
+		return (100 * this.points) / this.total;
+	}
+
+	updateProgressBar() {
+		this.progressBarEl.style.width = `${this.progress}%`;
+		classIf(this.progressBarEl, "in-combo", this.combo === MAX_COMBO);
+	}
+
+	next() {
+		const letters = shuffle(rowLetters).slice(0, this.optionEls.length);
+		const optionLetters = shuffle(letters);
+
+		this.rightAnswer = letters.find(({ name }) => this.lastAnswer !== name).name;
+		this.lastAnswer = this.rightAnswer;
+
+		for (const index in optionLetters) {
+			const romaji = optionLetters[index].name;
+			const option = this.optionEls[index];
+
+			option.innerText = romaji;
+			option.setAttribute("data-romaji", romaji);
+		}
+
+		this.letterImageEl.src = `/images/letters/${alphabet}_${this.rightAnswer}.svg`;
+	}
+
+	startGame() {
+		play("game_started");
+	
+		this.introductionContainerEl.style.display = "none";
+		this.gameContainerEl.classList.add("visible");
+		this.updateProgressBar();
+		this.next();
+	}
+	
+	introduceLetters() {
+		this.letterIntroductionEls.forEach((letter, index) => {
+			setTimeout(() => {
+				letter.style.display = "flex";
+				letter.classList.add("introducing");
+				play("letters/" + letter.getAttribute("data-letter"));
+	
+				this.particles.splash(
 					{
 						x: window.innerWidth / 2,
 						y: window.innerHeight / 3,
 					},
-					20,
-					particleName
+					7,
+					20
 				);
-			}
-		}, 5000 * index);
-
-		setTimeout(() => {
-			letter.style.display = "none";
-		}, 5000 * index + 4000);
-	});
-
-	setTimeout(startGame, 5000 * letterIntroductionEls.length);
-}
-
-/**************************************************************************************************
- *                                          Row completion                                        *
- **************************************************************************************************/
-
-async function congratulateWithRowCompletion() {
-	const rowCompletedEl = document.getElementById("row-completed");
-	rowCompletedEl.classList.add("visible");
-
-	play("row_completed_triumphal");
-
-	for (let i = 0; i < 7; i++) {
-		const petalsPosition = {
-			x: window.innerWidth * Math.random(),
-			y: (window.innerHeight * Math.random()) / 8,
-		};
-
-		for (let k = 0; k < 30; k++) {
-			createPetal(petalsPosition, 20, particleName);
-		}
-
-		await sleep(1000);
+			}, 5000 * index);
+	
+			setTimeout(() => {
+				letter.style.display = "none";
+			}, 5000 * index + 4000);
+		});
+	
+		setTimeout(() => this.startGame(), 5000 * this.letterIntroductionEls.length);
 	}
-
-	await sleep(3000);
-	backHome();
+	
+	async congratulateWithRowCompletion() {
+		this.rowCompletedEl.classList.add("visible");
+	
+		play("row_completed_triumphal");
+	
+		for (let i = 0; i < 7; i++) {
+			const petalsPosition = {
+				x: window.innerWidth * Math.random(),
+				y: (window.innerHeight * Math.random()) / 8,
+			};
+	
+			this.particles.splash(petalsPosition, 20, 30);
+	
+			await sleep(1000);
+		}
+	
+		await sleep(3000);
+		home();
+	}
 }
 
-const petals = countPetals();
 
-if (petals === 0) {
-	introduceLetters();
-} else {
-	startGame();
-}
+
+
+const game = new Game();
+game.run();

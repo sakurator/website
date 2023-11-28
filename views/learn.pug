@@ -13,7 +13,7 @@ block head
     script(src="/javascripts/learn.js", defer)
     
 block content
-    for sound in ['click', 'hover', 'quit', 'game_started', 'incorrect', 'result_completed', 'result_no_mistakes', 'level_completed', 'level_completed_perfectly'].concat(rowLetters.map(rowLetter => "letters/" + rowLetter.name)).concat(Array.from({length: 9}, (_, i) => i + 1).map(i => "combo_" + i))
+    for sound in ['click', 'hover', 'exit', 'game_started', 'incorrect', 'result_completed', 'result_no_mistakes', 'level_completed', 'level_completed_perfectly'].concat(rowLetters.map(rowLetter => "letters/" + rowLetter.name)).concat(Array.from({length: 9}, (_, i) => i + 1).map(i => "combo_" + i))
         audio(preload="auto")
             source(src="/sounds/" + sound + ".mp3", type="audio/mpeg")
     #introduction-container
@@ -62,8 +62,7 @@ block content
                 #panel-delimiter
                 #options
                     for i in [1, 2, 3, 4]
-                        .option 
-                            span.option-letter ...
+                        span.option ... 
             span#title Select the sound this #{alphabet} letter makes
         #game-results-container
             .game-result#game-result-completed

@@ -1,54 +1,39 @@
-let currentAlphabet = "hiragana";
+let alphabet = "hiragana";
 const contentContainerEl = document.getElementById("content-container");
-const progressResetContainerEl = document.getElementById(
-	"progress-reset-container"
-);
+const progressResetContainerEl = document.getElementById("progress-reset-container");
 
 function updatePetalScores() {
 	document.querySelectorAll(".row-subtitle").forEach((subtitle) => {
 		const petalsEarned = parseInt(
-			getCookie(currentAlphabet + "_" + subtitle.id.split("-")[1], 0)
+			getCookie(alphabet + "_" + subtitle.id.split("-")[1], 0)
 		);
 		const petalsToComplete = parseInt(subtitle.id.split("-")[2]);
 		const setCompleted = petalsEarned >= petalsToComplete;
-		subtitle.innerHTML =
-			petalsEarned +
-			(setCompleted ? "" : ` / ${petalsToComplete}`) +
-			`<img src="/images/particles/${
-				currentAlphabet === "hiragana" ? "petal" : "leaf"
-			}_${randomInt(PETAL_PARTICLE_VARIATIONS) + 1}.svg"/>`;
+		const particle = alphabetParticle(alphabet);
+
+		subtitle.innerHTML = petalsEarned + (setCompleted ? "" : ` / ${petalsToComplete}`) + `<img src="${particle.src}"/>`;
 	});
 
 	document.querySelectorAll(".row-progress-full").forEach((progressBar) => {
-		const petalsEarned = parseInt(
-			getCookie(
-				currentAlphabet +
-					"_" +
-					progressBar.children[0].id.split("-")[1],
-				0
-			)
-		);
-		const petalsToComplete = parseInt(
-			progressBar.children[0].id.split("-")[2]
-		);
-		const ratio = petalsEarned / petalsToComplete;
+		const letter = progressBar.children[0].id.split("-")[1];
+		const petalsEarned = petals(alphabet, letter);
+		const petalsToComplete = parseInt(progressBar.children[0].id.split("-")[2]);
+		const progress = petalsEarned / petalsToComplete * 100;
 
-		if (ratio < 1) {
+		if (progress < 100) {
 			progressBar.style.display = "flex";
-			progressBar.children[0].style.width = `${ratio * 100}%`;
+			progressBar.children[0].style.width = `${progress}%`;
 		} else {
 			progressBar.style.display = "none";
 		}
 	});
 
 	document.querySelectorAll(".row-completed-icon").forEach((icon) => {
-		const petalsEarned = parseInt(
-			getCookie(currentAlphabet + "_" + icon.id.split("-")[1])
-		);
+		const letter = icon.id.split("-")[1];
+		const petalsEarned = petals(alphabet, letter);
 		const petalsToComplete = parseInt(icon.id.split("-")[2]);
 
-		icon.style.display =
-			petalsEarned >= petalsToComplete ? "unset" : "none";
+		icon.style.display = petalsEarned >= petalsToComplete ? "unset" : "none";
 	});
 }
 
@@ -113,7 +98,7 @@ function switchAlphabet() {
 	);
 
 	play(`alphabet_switch_${alphabetName}`);
-	currentAlphabet = alphabetName;
+	alphabet = alphabetName;
 	updatePetalScores();
 }
 
@@ -141,7 +126,7 @@ document.querySelectorAll(".row").forEach((row) => {
 		let mouse = { x: event.clientX, y: event.clientY };
 		let transitionCircle = document.createElement("div");
 		transitionCircle.id = "transition-circle";
-		transitionCircle.classList.add(currentAlphabet);
+		transitionCircle.classList.add(alphabet);
 		transitionCircle.style.cssText = `left: ${mouse.x}px; top: ${mouse.y}px`;
 		document.body.appendChild(transitionCircle);
 
@@ -149,7 +134,7 @@ document.querySelectorAll(".row").forEach((row) => {
 			() =>
 				(window.location.href =
 					"/learn/" +
-					currentAlphabet +
+					alphabet +
 					"/" +
 					(row.id.split("-")[1] == ""
 						? "vowels"
@@ -192,14 +177,12 @@ document
 updatePetalScores();
 
 setInterval(() => {
-	for (let i = 0; i < 5; i += 1) {
-		createPetal(
-			{
-				x: Math.random() * window.innerWidth,
-				y: -window.innerHeight / 8,
-			},
-			7,
-			currentAlphabet === "hiragana" ? "petal" : "leaf"
-		);
-	}
+	alphabetParticle(alphabet).splash(
+		{
+			x: Math.random() * window.innerWidth,
+			y: -window.innerHeight / 8,
+		},
+		5,
+		7,
+	);
 }, 1500);

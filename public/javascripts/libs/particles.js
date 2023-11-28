@@ -1,59 +1,108 @@
-const PETAL_PARTICLE_VARIATIONS = 5;
-const MIN_PETAL_SIZE = 20;
-const MAX_PETAL_SIZE = 30;
-const PETAL_LIFETIME_MILLISECONDS = 4500;
-const GRAVITY_VECTOR = { x: 0.09, y: 0.2 };
+class ParticleGenerator {
+	static FPS = 60;
+	static MIN_SIZE = 20;
+	static MAX_SIZE = 30;
+	static PARTICLE_LIFETIME_MS = 4500;
+	static GRAVITY = 0.2;
+	static WIND = 0.05;
 
-function createPetal(initialLocation, initialVelocity, particleName = "petal") {
-	let petalElement = document.createElement("img");
-	petalElement.src =
-		`/images/particles/${particleName}_` +
-		Math.ceil(Math.random() * PETAL_PARTICLE_VARIATIONS) +
-		".svg";
-	petalElement.id = particleName + "_" + Math.round(Math.random() * 100000);
-	petalElement.classList.add("petal");
-	petalElement.style.width =
-		Math.random() * (MAX_PETAL_SIZE - MIN_PETAL_SIZE) +
-		MIN_PETAL_SIZE +
-		"px";
+	constructor({ particleName, variationsCount }) {
+		this.particleName = particleName;
+		this.variationsCount = variationsCount;
+	}
 
-	var petal = {
-		bornAt: Date.now(),
-		element: petalElement,
-		velocity: {
-			x: (Math.random() * 2 - 1) * initialVelocity,
-			y: (Math.random() * 2 - 1) * initialVelocity,
-		},
-		location: { ...initialLocation },
-		loop: function () {
-			petal.velocity.x += GRAVITY_VECTOR.x;
+	get src() {
+		const particleVariation = randomInt(this.variationsCount) + 1;
+		return `/images/particles/${this.particleName}_${particleVariation}.svg`;
+	}
 
-			petal.velocity.y +=
-				GRAVITY_VECTOR.y / (petal.velocity.y > 0 ? 4 : 1);
+	spawn(position = undefined, force = 5) {
+		if (position === undefined) {
+			position = createRandomScreenPosition();
+		}
 
-			petal.location.x += petal.velocity.x;
-			petal.location.y += petal.velocity.y;
+		const particleElement = document.createElement("img");
+		const particleSize = randomInt(ParticleGenerator.MIN_SIZE, ParticleGenerator.MAX_SIZE);
 
-			petal.element.style.left = petal.location.x + "px";
-			petal.element.style.top = petal.location.y + "px";
+		particleElement.classList.add("particle");
+		particleElement.src = this.src;
+		particleElement.style.width = `${particleSize}px`;
 
-			if (petal.bornAt <= Date.now() - PETAL_LIFETIME_MILLISECONDS) {
-				petal.destroy();
-			}
-		},
+		const particle = {
+			spawnedAt: Date.now(),
+			element: particleElement,
+			position: { ...position },
+			velocity: {
+				x: force * randomDeviation(),
+				y: force * randomDeviation(),
+			},
 
-		startFalling: function () {
-			petal.intervalID = setInterval(petal.loop, 1000 / 60);
-		},
+			isExpired: () => {
+				return since(particle.spawnedAt) > ParticleGenerator.PARTICLE_LIFETIME_MS;
+			},
 
-		destroy: function () {
-			clearInterval(petal.intervalID);
-			petal.element.remove();
-		},
-	};
+			update: () => {
+				particle.velocity.x += ParticleGenerator.WIND;
+				particle.velocity.y += ParticleGenerator.GRAVITY;
 
-	petal.startFalling();
-	document.body.appendChild(petal.element);
+				particle.position.x += particle.velocity.x;
+				particle.position.y += particle.velocity.y / (particle.velocity.y > 0 ? 4 : 1);
 
-	return petal;
+				particle.element.style.left = `${particle.position.x}px`;
+				particle.element.style.top = `${particle.position.y}px`;
+
+				if (particle.isExpired()) {
+					particle.despawn();
+				}
+			},
+
+			spawn: () => {
+				document.body.appendChild(particle.element);
+				particle.interval = setInterval(() => particle.update(), 1000 / ParticleGenerator.FPS);
+			},
+
+			despawn: () => {
+				particle.element.remove();
+				clearInterval(particle.interval);
+			},
+		};
+
+		particle.spawn();
+		return particle;
+	}
+
+	splash(position = undefined, count = 5, force = 5) {
+		if (position === undefined) {
+			position = createRandomScreenPosition();
+		}
+
+		for (let i = 0; i < count; i++) {
+			this.spawn(position, force);
+		}
+	}
+}
+
+const particles = {
+	petal: new ParticleGenerator({
+		particleName: "petal",
+		variationsCount: 5,
+	}),
+
+	leaf: new ParticleGenerator({
+		particleName: "leaf",
+		variationsCount: 5,
+	}),
+};
+
+const alphabetParticles = {
+	hiragana: particles.petal,
+	katakana: particles.leaf,
+};
+
+function alphabetParticle(alphabetName = alphabet) {
+	return alphabetParticles[alphabetName.toLowerCase()];
+}
+
+function splashParticles(position, count, force) {
+	alphabetParticle.splash(position, count, force);
 }

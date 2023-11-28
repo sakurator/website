@@ -450,14 +450,12 @@ a {
   background-color: #CCCCCC;
 }
 #game-container #game-column-container #options {
-  display: flex;
-  align-content: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5em;
 }
 #game-container #game-column-container #options .option {
-  width: 5em;
-  height: 4.5rem;
   display: flex;
   align-content: center;
   justify-content: space-evenly;
@@ -466,24 +464,10 @@ a {
   box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: 300ms;
+  font-size: 2.25em;
 }
 #game-container #game-column-container #options .option:hover {
   transform: scale(1.05) rotate(5deg);
-}
-#game-container #game-column-container #options .option:nth-child(4n), #game-container #game-column-container #options .option:nth-child(4n-1) {
-  margin-top: 0.5em;
-}
-#game-container #game-column-container #options .option:nth-child(4n-2), #game-container #game-column-container #options .option:nth-child(4n-3) {
-  margin-bottom: 0.5em;
-}
-#game-container #game-column-container #options .option:nth-child(2n) {
-  margin-right: 0.5em;
-}
-#game-container #game-column-container #options .option:nth-child(2n+1) {
-  margin-left: 0.5em;
-}
-#game-container #game-column-container #options .option .option-letter {
-  font-size: 2.25em;
 }
 #game-container #game-column-container #options .option.revealed {
   cursor: not-allowed;
@@ -503,7 +487,7 @@ a {
   text-transform: uppercase;
 }
 
-@keyframes petal-rotation {
+@keyframes particle-rotation {
   from {
     transform: rotate(0deg);
   }
@@ -511,9 +495,9 @@ a {
     transform: rotate(360deg);
   }
 }
-.petal {
+.particle {
   position: absolute;
-  animation: petal-rotation 2s ease-in-out infinite alternate-reverse;
+  animation: particle-rotation 2s ease-in-out infinite alternate-reverse;
   z-index: 1000;
   pointer-events: none;
 }
