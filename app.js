@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+var port = 3001;
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -16,6 +17,7 @@ var app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+app.set("port", port);
 
 app.use(logger("dev"));
 app.use(express.json());
