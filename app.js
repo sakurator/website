@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-var port = 3001;
+var port = process.env.PORT || 3001;
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
