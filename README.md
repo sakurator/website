@@ -1,13 +1,15 @@
-[![The Sakurator Banner](https://raw.githubusercontent.com/anafro/anafro/333ac8b3546c5e02cd3d074f6b635ca5818cb8b1/Banners/Sakurator.svg "Click to open Sakurator in browser")](https://sakurator.anafro.ru/)
-
-# <img src="https://raw.githubusercontent.com/anafro/anafro/444a517756c328110c0ee10dbc06f39827463a64/Logos/Sakurator.svg" height="24"> *Sakurator | Start learning 日本語 here*
-
-<img src="https://raw.githubusercontent.com/anafro/anafro/444a517756c328110c0ee10dbc06f39827463a64/Logos/Sakurator.svg" width="12" height="12"> [**Sakurator**](https://sakurator.anafro.ru) - a personal trainer for learning Japanese alphabets (hiragana & katakana). There are 18 sets of cards of 5-6 letters. 
-
-## How to play?
+### **Sakurator • Learn Japanese Alphabets for Free**  <a href="https://sakurator.anafro.ru/"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser-Button.svg" height="24" style="float:right;"></a>
 
 
-<img src="https://github.com/anafro/anafro/blob/main/Screenshots/Sakurator-Index.png?raw=true" style="border-radius:5px">
+
+[*Sakurator*](https://sakurator.anafro.ru) — your personal learning platform for Japanese alphabets, where you can learn both hiragana and katakana. There are 18 sets of cards of 5-6 letters each. 
+
+---
+
+### How to play?
+
+
+<img src="https://github.com/anafro/anafro/blob/main/Screenshots/Sakurator-Index.png?raw=true" style="border-radius:5px" style="float:right;">
 
 <br/>
 
