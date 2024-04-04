@@ -1,10 +1,10 @@
-### **Sakurator • Learn Japanese Alphabets for Free** <a href="https://sakurator.anafro.ru/" align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser-Button.svg" height="28" align="right"></a>
+&ensp;
 
+# <img src="https://raw.githubusercontent.com/anafro/anafro/main/Icons/Sakurator.svg" height="26"> &ensp; Sakurator <a href="https://sakurator.anafro.ru/" align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser-Button.svg" height="36" align="right"></a>
 
+&ensp;
 
-[*Sakurator*](https://sakurator.anafro.ru) — your personal learning platform for Japanese alphabets, where you can learn both hiragana and katakana. There are 18 sets of cards of 5-6 letters each. 
-
----
+[Sakurator](https://sakurator.anafro.ru) — your personal learning platform for Japanese alphabets, where you can learn both hiragana and katakana. There are 18 sets of cards of 5-6 letters each. 
 
 ### How to play?
 
