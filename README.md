@@ -1,8 +1,8 @@
 <p style="float:right">
-<a href="https://sakurator.anafro.ru/"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser-Button.svg" height="28" style="float:right"></a>
+
 </p>
 
-### **Sakurator • Learn Japanese Alphabets for Free**  
+### **Sakurator • Learn Japanese Alphabets for Free** <a href="https://sakurator.anafro.ru/" align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser-Button.svg" height="28" align="right"></a>
 
 
 
