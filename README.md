@@ -1,6 +1,12 @@
 &ensp;
 
-# <img src="https://raw.githubusercontent.com/anafro/anafro/main/Icons/Sakurator.svg" height="26"> &ensp; Sakurator <a href="https://sakurator.anafro.ru/" align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser-Button.svg" height="36" align="right"></a>
+&ensp;
+
+<p align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Icons/Sakurator.svg" height="128"></p>
+
+&ensp;
+
+# Sakurator <a href="https://sakurator.anafro.ru/" align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Open-In-Browser.svg" height="36" align="right"></a> <a href="https://sakurator.anafro.ru/" align="right"><img src="https://raw.githubusercontent.com/anafro/anafro/main/Buttons/Deploy-Via-GitHub.svg" height="36" align="right"></a>
 
 &ensp;
 
