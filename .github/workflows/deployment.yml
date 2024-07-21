@@ -21,7 +21,7 @@ jobs:
     - name: install node packages
       run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && npm i"
     - name: create .env file
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && rm .env && touch .env && echo DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@localhost:3306/sakurator && echo PORT=${{ secrets.PORT }} >> .env' >> .env"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && rm .env && touch .env && echo DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@localhost:3306/sakurator' >> .env && echo 'PORT=${{ secrets.PORT }}' >> .env"
     - name: migrate database
       run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && npx prisma db push && node prisma/seed.js"
     - name: start sakurator server
