@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  run_pull:
+    name: run pull
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: install ssh keys
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+    - name: stop sakurator server
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "pm2 stop sakurator"
+    - name: connect and pull
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull"
+    - name: install node packages
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && npm i"
+    - name: create .env file
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && rm .env && touch .env && echo DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@localhost:3306/sakurator && echo PORT=${{ secrets.PORT }} >> .env' >> .env"
+    - name: migrate database
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && npx prisma db push && node prisma/seed.js"
+    - name: start sakurator server
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "pm2 start sakurator"
+    - name: cleanup
+      run: rm -rf ~/.ssh
