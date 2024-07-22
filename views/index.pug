@@ -15,11 +15,11 @@ block content
   #content-container
     #left-panel
       #alphabet-switch-panel
-        span.alphabet-switch-title.enabled#hiragana-alphabet-switch-title Hiragana
+        span.alphabet-switch-title.enabled#hiragana-alphabet-switch-title Хирагана
         #alphabet-switch
           input(type="checkbox")#alphabet-switch-checkbox
           span#alphabet-switch-slider
-        span.alphabet-switch-title#katakana-alphabet-switch-title Katakana
+        span.alphabet-switch-title#katakana-alphabet-switch-title Катакана
       #rows-container
         for row in rows
           .row(id="row-" + row.letter)
@@ -35,15 +35,15 @@ block content
               span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petalsToComplete)
                 img(src="/images/particles/petal_1.svg")
       span#footer 
-        | © Sakurator 2023 by 
-        a(href="https://github.com/anafro") anafro
+        | © Sakurator 2024
+        a(href="https://github.com/anafro") Анатолий Фролов
         | . 
-        a(href="/terms-of-use") Terms of use 
+        a(href="/terms-of-use") Правила пользования
         | | 
-        a(href="/policy") Privacy policy 
-        | | Click 
-        button#progress-reset-button here 
-        |  to reset your progress. 
+        a(href="/policy") Политика конфиденциальности
+        | | Нажми
+        button#progress-reset-button сюда
+        |, чтобы сбросить прогресс
     #right-panel
       #logo-container
         img(src="/images/logos/titled_gray.svg")#logo
@@ -52,8 +52,8 @@ block content
         //-   renderYandexAdsBlock('R-A-1622843-1')
       img(src="/images/illustrations/sakura.svg")#sakura-illustration
   #progress-reset-container
-    span#progress-reset-title You sure you wanna reset your progress?
+    span#progress-reset-title Ты точно хочешь сбросить прогресс?
     img#progress-reset-illustration(src="/images/illustrations/trash-can.svg")
     #progress-reset-buttons-container
-      button#reset-progress-button Yes, reset my progress (no undo)
-      button#keep-progress-button No, keep it
+      button#reset-progress-button Да, сбросить (безвозвратно!)
+      button#keep-progress-button Нет, оставить

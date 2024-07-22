@@ -39,8 +39,8 @@ block content
             circle.row-completed-medal-ruby(cx='808.21' cy='685.02' r='13.34')
 
         #row-completed-text-container
-            span#row-completed-title Congratulations
-            span#row-completed-subtitle You completed #{alphabet} #{row.name}!
+            span#row-completed-title Поздравляем
+            span#row-completed-subtitle Ты закончил набор "#{alphabet} #{row.name}"!
 
     #game-container
         #game-column-container
@@ -63,13 +63,13 @@ block content
                 #options
                     for i in [1, 2, 3, 4]
                         span.option ... 
-            span#title Select the sound this #{alphabet} letter makes
+            span#title Выбери звук, который делает эта буква
         #game-results-container
             .game-result#game-result-completed
                 span.petals-earned +1
                 img.petals-earned-icon(src="/images/particles/" + (alphabet === "Hiragana" ? "petal" : "leaf") + "_" + Math.ceil(Math.random() * 5) + '.svg')
-                p.petals-earned-for Game completed
+                p.petals-earned-for Игра закончена
             .game-result#game-result-no-mistakes
                 span.petals-earned +1
                 img.petals-earned-icon(src="/images/particles/" + (alphabet === "Hiragana" ? "petal" : "leaf") + "_" + Math.ceil(Math.random() * 5) + '.svg')
-                p.petals-earned-for No mistakes
+                p.petals-earned-for Без ошибок
