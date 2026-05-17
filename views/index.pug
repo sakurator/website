@@ -35,15 +35,18 @@ block content
               span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petalsToComplete)
                 img(src="/images/particles/petal_1.svg")
       span#footer 
-        | © Sakurator 2024
+        | © Sakurator 2022-#{new Date().getFullYear()}
+        |
         a(href="https://github.com/anafro") Anatoly Frolov
-        | . 
+        | .
+        br
         a(href="/terms-of-use") Terms of Use
-        | | 
+        |  | 
         a(href="/policy") Privacy Policy
-        | Press
+        |  | 
+        |  Press 
         button#progress-reset-button here
-        | to reset your progress
+        |  to reset your progress
     #right-panel
       #logo-container
         img(src="/images/logos/titled_gray.svg")#logo
