@@ -1,0 +1,13 @@
+/.git/
+/.github/
+/.idea/
+/node_modules/
+/.dockerignore
+/.editorconfig
+/.env.example
+/.gitignore
+/Dockerfile
+/LICENSE
+/README.md
+/compose.yaml
+/compose.override.yaml
