@@ -1,0 +1,68 @@
+services:
+    nginx:
+        image: nginx:1.29.4-alpine3.23
+        restart: unless-stopped
+        ports:
+            - 80:80
+            - 443:443
+        healthcheck:
+            test: ["CMD-SHELL", "nginx -t || exit 1"]
+            interval: 10s
+            timeout: 3s
+            start_period: 10s
+            start_interval: 1s
+            retries: 3
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf:ro
+        networks:
+            - internal
+        depends_on:
+            sakurator:
+                condition: service_started
+    sakurator:
+        build: .
+        networks:
+            - internal
+        secrets:
+            - mysql-hostname
+            - mysql-password
+            - mysql-database
+        environment:
+            - DATABASE_URL=mysql://root:${MYSQL_PASSWORD}@${MYSQL_HOSTNAME}:3306/${MYSQL_DATABASE}
+            - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
+            - MYSQL_USERNAME=${MYSQL_USERNAME}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+        depends_on:
+            mysql:
+                condition: service_healthy
+    mysql:
+        image: mysql:9.7.0
+        volumes:
+            - mysql-data:/var/lib/mysql
+        networks: 
+            - internal
+        environment:
+            - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-password
+            - MYSQL_DATABASE_FILE=/run/secrets/mysql-database
+        secrets:
+            - mysql-password
+            - mysql-database
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
+
+secrets:
+    mysql-hostname:
+        environment: MYSQL_HOSTNAME
+    mysql-password:
+        environment: MYSQL_PASSWORD
+    mysql-database:
+        environment: MYSQL_DATABASE
+
+volumes:
+    mysql-data:
+
+networks:
+    internal:
