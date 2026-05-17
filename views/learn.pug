@@ -8,8 +8,6 @@ block head
         var row = JSON.parse(`!{JSON.stringify(row, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
         var alphabet = `#{alphabet}`
         var letter = `#{letter}`
-    //- <script>window.yaContextCb=window.yaContextCb||[]</script>
-    //- script(src="https://yandex.ru/ads/system/context.js", async)
     script(src="/javascripts/learn.js", defer)
     
 block content
@@ -39,19 +37,11 @@ block content
             circle.row-completed-medal-ruby(cx='808.21' cy='685.02' r='13.34')
 
         #row-completed-text-container
-            span#row-completed-title Поздравляем
-            span#row-completed-subtitle Ты закончил набор "#{alphabet} #{row.name}"!
+            span#row-completed-title Congratulations
+            span#row-completed-subtitle You've finished the row "#{alphabet} #{row.name}"!
 
     #game-container
         #game-column-container
-            //- div(id="yandex_rtb_R-A-1622843-2")
-            //- script.
-            //-     window.yaContextCb.push(() => {
-            //-         Ya.Context.AdvManager.render({
-            //-             renderTo: 'yandex_rtb_R-A-1622843-2',
-            //-             blockId: 'R-A-1622843-2',
-            //-         });
-            //-     });
             #game-progress-bar-container
                 img#exit-button(src="/images/icons/exit.svg")
                 #game-progress-bar
@@ -62,14 +52,14 @@ block content
                 #panel-delimiter
                 #options
                     for i in [1, 2, 3, 4]
-                        span.option ... 
-            span#title Выбери звук, который делает эта буква
+                        span.option ...
+            span#title Select the sound this kana makes
         #game-results-container
             .game-result#game-result-completed
                 span.petals-earned +1
                 img.petals-earned-icon(src="/images/particles/" + (alphabet === "Hiragana" ? "petal" : "leaf") + "_" + Math.ceil(Math.random() * 5) + '.svg')
-                p.petals-earned-for Игра закончена
+                p.petals-earned-for Lesson completed
             .game-result#game-result-no-mistakes
                 span.petals-earned +1
                 img.petals-earned-icon(src="/images/particles/" + (alphabet === "Hiragana" ? "petal" : "leaf") + "_" + Math.ceil(Math.random() * 5) + '.svg')
-                p.petals-earned-for Без ошибок
+                p.petals-earned-for No mistakes
