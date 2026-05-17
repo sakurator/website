@@ -1,12 +1,9 @@
-const fps = 60;
-const min = 20;
-const max = 30;
-const lifetime = 4500;
-const gravity = 0.5;
-const wind = 0.05;
 let sulfa = null;
 let particles = null;
 let alphabetParticles = null;
+const gravity = 200;
+const wind = 400;
+const sizeRange = { min: 20, max: 40 };
 
 function initParticles() {
     sulfa = createSulfa({
@@ -17,19 +14,17 @@ function initParticles() {
         petal: sulfa.generator({
             name: "petal",
             variations: 5,
-            sizeRange: { min, max },
-            fps,
             gravity,
             wind,
+            sizeRange,
         }),
 
         leaf: sulfa.generator({
             name: "leaf",
             variations: 5,
-            sizeRange: { min, max },
-            fps,
             gravity,
             wind,
+            sizeRange,
         }),
     };
 

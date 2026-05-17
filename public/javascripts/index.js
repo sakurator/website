@@ -11,7 +11,6 @@ function updatePetalScores() {
         const setCompleted = petalsEarned >= petalsToComplete;
         const particle = alphabetParticle(alphabet);
 
-        console.log(particle);
         subtitle.innerHTML = petalsEarned + (setCompleted ? "" : ` / ${petalsToComplete}`) + `<img src="${particle.nextVariationUri()}"/>`;
     });
 
@@ -180,10 +179,10 @@ updatePetalScores();
 setInterval(() => {
     alphabetParticle(alphabet).splash(
         {
-            x: Math.random() * window.innerWidth,
-            y: -window.innerHeight / 8,
+            x: Math.random() * window.innerWidth - window.innerHeight / 4,
+            y: -window.innerHeight / 4,
         },
         5,
-        7,
+        700,
     );
-}, 1500);
+}, 300);
