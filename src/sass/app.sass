@@ -1,10 +1,10 @@
 @use "sass:color"
-@import "colors"
+@use "colors"
 
 @font-face 
     font-family: "Golos Text VF"
     src: url("../fonts/golos.ttf")
-    
+
 *
     font-family: "Golos Text VF"
     margin: 0
@@ -26,7 +26,7 @@ html, body
     margin-top: 3%
 
 a
-    color: $sakura
+    color: colors.$sakura
     text-decoration: none
 
 #content-container
@@ -68,13 +68,13 @@ a
                     width: 0
                     height: 0
                 #alphabet-switch-checkbox:checked + #alphabet-switch-slider
-                    background-color: color.adjust($sakura, $hue: 180, $blackness: 20%)
+                    background-color: color.adjust(colors.$sakura, $hue: 180, $blackness: 20%)
                     &:before
                         -webkit-transform: translateX(34px)
                         -ms-transform: translateX(34px)
                         transform: translateX(34px)
                 #alphabet-switch-checkbox:focus + #alphabet-switch-slider
-                    box-shadow: 0 0 1px $sakura
+                    box-shadow: 0 0 1px colors.$sakura
                 #alphabet-switch-slider
                     position: absolute
                     cursor: pointer
@@ -82,7 +82,7 @@ a
                     left: 0
                     right: 0
                     bottom: 0
-                    background-color: $sakura
+                    background-color: colors.$sakura
                     transition: .2s
                     border-radius: 50rem
                     &:before
@@ -100,10 +100,10 @@ a
             .alphabet-switch-title
                 font-size: 24px
                 padding: 0 16px 0
-                color: $gray
+                color: colors.$gray
                 transition: .4s
                 &.enabled
-                    color: $black
+                    color: colors.$black
 
         #rows-container
             display: flex
@@ -126,9 +126,9 @@ a
                         transform: scale(1.07) rotate(2deg)
                         box-shadow: 35px 35px 70px #0002
                         &.hiragana
-                            border: 1px $sakura solid
+                            border: 1px colors.$sakura solid
                         &.katakana
-                            border: 1px $turquoise solid
+                            border: 1px colors.$turquoise solid
                     .row-kana
                         opacity: 0.85
                     .row-description
@@ -162,12 +162,12 @@ a
                             height: 100%
                         .row-progress-completed
                             &.hiragana
-                                background: $sakura-gradient
+                                background: colors.$sakura-gradient
                             &.katakana
-                                background: $turquoise-gradient
+                                background: colors.$turquoise-gradient
                         .row-progress-full
                             width: 100%
-                            background-color: $gray
+                            background-color: colors.$gray
                             
                 .row-description
                     display: flex
@@ -192,14 +192,14 @@ a
                         column-gap: 0.33em
                         justify-content: center
                         font-size: 11px
-                        color: $gray
+                        color: colors.$gray
                         & > img
                             width: 1em
                             aspect-ratio: 1 / 1
         #footer
             text-align: center
             font-size: 12px
-            color: $gray
+            color: colors.$gray
 
     #right-panel
         display: flex
@@ -242,9 +242,9 @@ a
     height: 2px 
     transform: scale(1500)
     &.hiragana
-        background-color: $sakura
+        background-color: colors.$sakura
     &.katakana
-        background-color: $turquoise
+        background-color: colors.$turquoise
 
 
 @keyframes game-completed
@@ -310,7 +310,7 @@ a
                     width: $result-title-size / 4 * 3
                 .petals-earned-for
                     font-size: 16px
-                    color: $gray
+                    color: colors.$gray
                     width: 100%
                     text-align: center
     #game-column-container
@@ -342,19 +342,19 @@ a
                 #game-progress-bar-full
                     width: 100%
                     height: 100%
-                    background-color: $gray
+                    background-color: colors.$gray
                     #game-progress-bar-completed
                         height: 100%
                         transition: 200ms ease-out
                         &.hiragana
-                            background: $sakura-gradient
+                            background: colors.$sakura-gradient
                             &.in-combo
-                                background: $combo-gradient-hiragana
-                                box-shadow: 0 0 9px $sakura
+                                background: colors.$combo-gradient-hiragana
+                                box-shadow: 0 0 9px colors.$sakura
                         &.katakana
-                            background: $turquoise-gradient
+                            background: colors.$turquoise-gradient
                             &.in-combo
-                                background: $combo-gradient-katakana
+                                background: colors.$combo-gradient-katakana
                                 box-shadow: 0 0 9px #0ED2F7
         $panel-size: 12em
         $space-between-options: .5em
@@ -372,7 +372,7 @@ a
             width: 1px
             height: 100%
             margin: 2em 5em
-            background-color: $gray
+            background-color: colors.$gray
         #options
             display: grid
             grid-template-rows: 1fr 1fr
@@ -393,13 +393,13 @@ a
                 &.revealed
                     cursor: not-allowed
                     &.correct
-                        background: $sakura-gradient
+                        background: colors.$sakura-gradient
                     &.incorrect
-                        background: $gray
+                        background: colors.$gray
     
     #title
         font-size: 14px
-        color: $gray
+        color: colors.$gray
         text-transform: lowercase
         &::first-letter
             text-transform: uppercase
@@ -607,10 +607,10 @@ a
     opacity: 0.7
 
 #row-completed[data-alphabet="Hiragana"] .row-completed-medal-ruby
-    fill: $sakura
+    fill: colors.$sakura
 
 #row-completed[data-alphabet="Katakana"] .row-completed-medal-ruby
-    fill: $turquoise
+    fill: colors.$turquoise
 
 .row-completed-medal-ruby, .row-completed-medal-gold
     stroke-width: 0px
@@ -621,7 +621,7 @@ a
 
 #progress-reset-button
     all: unset
-    color: $sakura
+    color: colors.$sakura
     cursor: pointer
 
 #yandex_rtb_R-A-1622843-2
@@ -674,12 +674,12 @@ a
             all: unset
             cursor: pointer
         #reset-progress-button
-            background: $sakura
+            background: colors.$sakura
             color: white
             padding: 0.5em 1em
             border-radius: 0.25em
         #keep-progress-button
-            color: $gray
+            color: colors.$gray
             text-decoration: underline
 
 // @media only screen and (min-width: 801px)

@@ -37,7 +37,6 @@ a {
   height: 100%;
   flex-direction: row;
   align-items: center;
-  animation: content-container-reveal 400ms ease-out;
 }
 @keyframes content-container-reveal {
   from {
@@ -48,6 +47,9 @@ a {
     opacity: 1;
     transform: scale(1);
   }
+}
+#content-container {
+  animation: content-container-reveal 400ms ease-out;
 }
 #content-container > * {
   padding: 8.3333333333% 0;
@@ -79,7 +81,7 @@ a {
   height: 0;
 }
 #content-container #left-panel #alphabet-switch-panel #alphabet-switch #alphabet-switch-checkbox:checked + #alphabet-switch-slider {
-  background-color: #6dcbc7;
+  background-color: rgb(109, 203, 199.1103448276);
 }
 #content-container #left-panel #alphabet-switch-panel #alphabet-switch #alphabet-switch-checkbox:checked + #alphabet-switch-slider:before {
   -webkit-transform: translateX(34px);
@@ -190,7 +192,7 @@ a {
   background: linear-gradient(to right, #FEAF9F, #FE6D73);
 }
 #content-container #left-panel #rows-container .row .row-card .row-progress .row-progress-completed.katakana {
-  background: linear-gradient(to right, #6DCBC7, #6d7f7e);
+  background: linear-gradient(to right, #6DCBC7, rgb(109, 126.5, 125.7553191489));
 }
 #content-container #left-panel #rows-container .row .row-card .row-progress .row-progress-full {
   width: 100%;
@@ -337,11 +339,6 @@ a {
 #game-container #game-results-container .game-result {
   display: none;
 }
-#game-container #game-results-container .game-result.shown {
-  display: inline-block;
-  animation: game-result-show 1600ms ease-in;
-  opacity: 0;
-}
 @keyframes game-result-show {
   from {
     opacity: 0;
@@ -359,6 +356,11 @@ a {
     opacity: 0;
     transform: scale(1) rotate(0);
   }
+}
+#game-container #game-results-container .game-result.shown {
+  display: inline-block;
+  animation: game-result-show 1600ms ease-in;
+  opacity: 0;
 }
 #game-container #game-results-container .game-result.shown .petals-earned {
   font-size: 64px;
@@ -425,7 +427,7 @@ a {
   box-shadow: 0 0 9px #FE6D73;
 }
 #game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.katakana {
-  background: linear-gradient(to right, #6DCBC7, #6d7f7e);
+  background: linear-gradient(to right, #6DCBC7, rgb(109, 126.5, 125.7553191489));
 }
 #game-container #game-column-container #game-progress-bar-container #game-progress-bar #game-progress-bar-full #game-progress-bar-completed.katakana.in-combo {
   background: linear-gradient(to right, #B2FEFA, #0ED2F7);
