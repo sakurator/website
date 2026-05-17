@@ -1,6 +1,10 @@
 @use "sass:color"
 @use "colors"
 
+$result-title-size: 64px
+$panel-size: 12em
+$space-between-options: .5em
+
 @font-face 
     font-family: "Golos Text VF"
     src: url("../fonts/golos.ttf")
@@ -9,6 +13,7 @@
     font-family: "Golos Text VF"
     margin: 0
     padding: 0
+    box-sizing: border-box
 
 html, body
     margin: 0
@@ -29,210 +34,230 @@ a
     color: colors.$sakura
     text-decoration: none
 
+@keyframes app__fade-in
+    from
+        transform: scale(1.01)
+        opacity: 0
+
 #content-container
     display: flex
+    height: 100vh
+    animation: app__fade-in 400ms ease-out
+    padding-block: 5rem
+
+#left-panel
+    display: flex
+    flex-direction: column
+    flex-basis: 40%
+    align-items: center
+    justify-content: space-around
+
+#alphabet-switch-panel
     width: 100%
-    height: 100%
+    display: flex
     flex-direction: row
     align-items: center
-    @keyframes content-container-reveal
-        from
-            transform: scale(1.01)
-            opacity: 0
-        to
+    justify-content: center
+
+#alphabet-switch
+    position: relative
+    display: inline-block
+    width: 60px
+    height: 26px
+
+#alphabet-switch-checkbox
+    opacity: 0
+    width: 0
+    height: 0
+
+#alphabet-switch-checkbox:checked + #alphabet-switch-slider
+    background-color: color.adjust(colors.$sakura, $hue: 180, $blackness: 20%)
+    &:before
+        -webkit-transform: translateX(34px)
+        -ms-transform: translateX(34px)
+        transform: translateX(34px)
+
+#alphabet-switch-checkbox:focus + #alphabet-switch-slider
+    box-shadow: 0 0 1px colors.$sakura
+
+#alphabet-switch-slider
+    position: absolute
+    cursor: pointer
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: colors.$sakura
+    transition: .2s
+    border-radius: 50rem
+    &:before
+        position: absolute
+        content: ""
+        height: 18px
+        width: 18px
+        left: 4px
+        bottom: 4px
+        background-color: white
+        transition: .2s
+        border-radius: 50rem
+        transition-timing-function: ease-in-out
+
+.alphabet-switch-title
+    font-size: 24px
+    padding: 0 16px 0
+    color: colors.$gray
+    transition: .4s
+    &.enabled
+        color: colors.$black
+
+#rows-container
+    display: flex
+    text-align: center
+    flex-wrap: wrap
+    align-items: center
+    justify-content: center
+    height: auto
+    width: 80%
+
+.row
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 33%
+    padding: .5em 0 .5em
+    cursor: pointer
+    &:hover
+        .row-card
+            transform: scale(1.07) rotate(2deg)
+            box-shadow: 35px 35px 70px #0002
+            &.hiragana
+                border: 1px colors.$sakura solid
+            &.katakana
+                border: 1px colors.$turquoise solid
+        .row-kana
+            opacity: 0.85
+        .row-description
             opacity: 1
-            transform: scale(1)
-    animation: content-container-reveal 400ms ease-out
-    & > *
-        padding: calc(100% / 12) 0
-    #left-panel
-        display: flex
-        flex-direction: column
-        width: 40%
+    &:active
+        .row-card
+            transform: scale(0.7) rotate(-3deg)
+
+.row-card
+    border: 0px solid transparent
+    width: 65%
+    height: 65%
+    aspect-ratio: 1 / 1
+    padding: 5% 2.5%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-radius: 15px
+    box-shadow: 1px 1px 8px #0002
+    transition: 150ms ease-in
+    z-index: 10
+    box-sizing: border-box
+
+.row-kana
+    width: 70%
+    height: auto
+
+.row-progress
+    width: 70%
+    height: 5px
+    *
+        border-radius: 50rem
         height: 100%
-        align-items: center
-        justify-content: space-around
-        #alphabet-switch-panel
-            width: 100%
-            display: flex
-            flex-direction: row
-            align-items: center
-            justify-content: center
-            #alphabet-switch
-                position: relative
-                display: inline-block
-                width: 60px
-                height: 26px
-                #alphabet-switch-checkbox
-                    opacity: 0
-                    width: 0
-                    height: 0
-                #alphabet-switch-checkbox:checked + #alphabet-switch-slider
-                    background-color: color.adjust(colors.$sakura, $hue: 180, $blackness: 20%)
-                    &:before
-                        -webkit-transform: translateX(34px)
-                        -ms-transform: translateX(34px)
-                        transform: translateX(34px)
-                #alphabet-switch-checkbox:focus + #alphabet-switch-slider
-                    box-shadow: 0 0 1px colors.$sakura
-                #alphabet-switch-slider
-                    position: absolute
-                    cursor: pointer
-                    top: 0
-                    left: 0
-                    right: 0
-                    bottom: 0
-                    background-color: colors.$sakura
-                    transition: .2s
-                    border-radius: 50rem
-                    &:before
-                        position: absolute
-                        content: ""
-                        height: 18px
-                        width: 18px
-                        left: 4px
-                        bottom: 4px
-                        background-color: white
-                        transition: .2s
-                        border-radius: 50rem
-                        transition-timing-function: ease-in-out
+.row-progress-completed
+    &.hiragana
+        background: colors.$sakura-gradient
+    &.katakana
+        background: colors.$turquoise-gradient
 
-            .alphabet-switch-title
-                font-size: 24px
-                padding: 0 16px 0
-                color: colors.$gray
-                transition: .4s
-                &.enabled
-                    color: colors.$black
+.row-progress-full
+    width: 100%
+    background-color: colors.$gray
 
-        #rows-container
-            display: flex
-            text-align: center
-            flex-wrap: wrap
-            align-items: center
-            justify-content: center
-            height: auto
-            width: 80%
-            .row
-                display: flex
-                flex-direction: column
-                justify-content: center
-                align-items: center
-                width: 33%
-                padding: .5em 0 .5em
-                cursor: pointer
-                &:hover 
-                    .row-card
-                        transform: scale(1.07) rotate(2deg)
-                        box-shadow: 35px 35px 70px #0002
-                        &.hiragana
-                            border: 1px colors.$sakura solid
-                        &.katakana
-                            border: 1px colors.$turquoise solid
-                    .row-kana
-                        opacity: 0.85
-                    .row-description
-                        opacity: 1
-                &:active
-                    .row-card
-                        transform: scale(0.7) rotate(-3deg)
-                .row-card
-                    border: 0px solid transparent
-                    width: 65%
-                    height: 65%
-                    aspect-ratio: 1 / 1
-                    padding: 5% 2.5%
-                    display: flex
-                    flex-direction: column
-                    justify-content: center
-                    align-items: center
-                    border-radius: 15px
-                    box-shadow: 1px 1px 8px #0002
-                    transition: 150ms ease-in
-                    z-index: 10
-                    box-sizing: border-box
-                    .row-kana
-                        width: 70%
-                        height: auto
-                    .row-progress
-                        width: 70%
-                        height: 5px
-                        *
-                            border-radius: 50rem
-                            height: 100%
-                        .row-progress-completed
-                            &.hiragana
-                                background: colors.$sakura-gradient
-                            &.katakana
-                                background: colors.$turquoise-gradient
-                        .row-progress-full
-                            width: 100%
-                            background-color: colors.$gray
-                            
-                .row-description
-                    display: flex
-                    flex-direction: column
-                    padding-top: .25em
-                    transition: 100ms ease-out
-                    .row-title-container
-                        display: flex
-                        flex-direction: row
-                        align-items: center
-                        justify-content: center
-                    .row-completed-icon
-                        margin-right: 4px
-                        width: 8px
-                        display: none
-                    .row-title
-                        font-size: 12px
-                    .row-subtitle
-                        display: flex
-                        flex-direction: row
-                        align-items: center
-                        column-gap: 0.33em
-                        justify-content: center
-                        font-size: 11px
-                        color: colors.$gray
-                        & > img
-                            width: 1em
-                            aspect-ratio: 1 / 1
-        #footer
-            text-align: center
-            font-size: 12px
-            color: colors.$gray
+.row-description
+    display: flex
+    flex-direction: column
+    padding-top: .25em
+    transition: 100ms ease-out
 
+.row-title-container
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+
+.row-completed-icon
+    margin-right: 4px
+    width: 8px
+    display: none
+
+.row-title
+    font-size: 12px
+
+.row-subtitle
+    display: flex
+    flex-direction: row
+    align-items: center
+    column-gap: 0.33em
+    justify-content: center
+    font-size: 11px
+    color: colors.$gray
+    & > img
+        width: 1em
+        aspect-ratio: 1 / 1
+
+#footer
+    text-align: center
+    font-size: 12px
+    color: colors.$gray
+
+#right-panel
+    display: flex
+    flex-direction: column
+    width: 60%
+    height: 100%
+    align-items: end
+    justify-content: space-between
+
+#logo-container
+    padding-right: 2em
+    padding-top: calc(100% / 24)
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+
+#yandex_rtb_R-A-1622843-1
+    width: 320px
+    height: 100px
+
+#logo
+    height: 24px
+    margin-bottom: 24px
+
+#sakura-illustration
+    width: 60%
+    height: auto
+    position: absolute
+    bottom: 0
+    right: 0
+
+@media only screen and (max-width: 1030px)
     #right-panel
-        display: flex
-        flex-direction: column
-        width: 60%
-        height: 100%
-        align-items: end
-        justify-content: space-between
-        #logo-container
-            padding-right: 2em
-            padding-top: calc(100% / 24)
-            display: flex
-            flex-direction: column
-            align-items: flex-end
-            #yandex_rtb_R-A-1622843-1
-                width: 320px
-                height: 100px
-            #logo
-                height: 24px
-                margin-bottom: 24px
-        #sakura-illustration
-            width: 60%
-            height: auto
-    @media only screen and (max-width: 1030px)
-        #right-panel
-            display: none
-        #left-panel
-            width: 100%
+        display: none
+    #left-panel
+        width: 100%
+
 @keyframes transition-circle-expansion
     from
         transform: scale(0)
     to
         transform: scale(1500)    
+
 #transition-circle
     z-index: 9999
     border-radius: 50rem
@@ -245,7 +270,6 @@ a
         background-color: colors.$sakura
     &.katakana
         background-color: colors.$turquoise
-
 
 @keyframes game-completed
     from
@@ -276,133 +300,135 @@ a
     flex-direction: column
     width: 100%
     height: 100%
-    $result-title-size: 64px
     &.visible
         display: flex
         animation: game-container-fade-in 300ms forwards ease-in-out
-    #game-results-container
-        .game-result
-            display: none
-            &.shown
-                @keyframes game-result-show
-                    from
-                        opacity: 0
-                        transform: scale(6) rotate(-30deg)
-                    40%
-                        opacity: 1
-                        transform: scale(1) rotate(0)
-                    60%
-                        opacity: 1
-                        transform: scale(1) rotate(0)
-                    to
-                        opacity: 0
-                        transform: scale(1) rotate(0)
-                display: inline-block
-                animation: game-result-show 1600ms ease-in
+
+.game-result
+    display: none
+    &.shown
+        @keyframes game-result-show
+            from
                 opacity: 0
-                .petals-earned
-                    font-size: $result-title-size
-                    display: inline-block
-                    line-height: 1em
-                    margin-right: .25em
-                    letter-spacing: .1em
-                .petals-earned-icon
-                    width: calc($result-title-size / 4 * 3)
-                .petals-earned-for
-                    font-size: 16px
-                    color: colors.$gray
-                    width: 100%
-                    text-align: center
-    #game-column-container
-        display: flex
-        align-items: center
-        justify-content: center
-        flex-direction: column
-        width: 50%
-        height: 100%
-        &.completed
-            animation: game-completed 300ms ease-in-out
-            opacity: 0
-            transform: scale(1.5)
-        #game-progress-bar-container
+                transform: scale(6) rotate(-30deg)
+            40%
+                opacity: 1
+                transform: scale(1) rotate(0)
+            60%
+                opacity: 1
+                transform: scale(1) rotate(0)
+            to
+                opacity: 0
+                transform: scale(1) rotate(0)
+        display: inline-block
+        animation: game-result-show 1600ms ease-in
+        opacity: 0
+        .petals-earned
+            font-size: $result-title-size
+            display: inline-block
+            line-height: 1em
+            margin-right: .25em
+            letter-spacing: .1em
+        .petals-earned-icon
+            width: calc($result-title-size / 4 * 3)
+        .petals-earned-for
+            font-size: 16px
+            color: colors.$gray
             width: 100%
-            display: flex
-            flex-direction: row
-            align-items: center
-            justify-content: center
-            #exit-button
-                width: 12px
-                margin-right: 24px
-                cursor: pointer
-            #game-progress-bar
-                width: 100%
-                height: 8px
-                *
-                    border-radius: 50em
-                #game-progress-bar-full
-                    width: 100%
-                    height: 100%
-                    background-color: colors.$gray
-                    #game-progress-bar-completed
-                        height: 100%
-                        transition: 200ms ease-out
-                        &.hiragana
-                            background: colors.$sakura-gradient
-                            &.in-combo
-                                background: colors.$combo-gradient-hiragana
-                                box-shadow: 0 0 9px colors.$sakura
-                        &.katakana
-                            background: colors.$turquoise-gradient
-                            &.in-combo
-                                background: colors.$combo-gradient-katakana
-                                box-shadow: 0 0 9px #0ED2F7
-        $panel-size: 12em
-        $space-between-options: .5em
-        #game-panels
-            padding-top: 1em
-            padding-bottom: .5em
-            display: flex
-            align-items: center
-            justify-content: center
-            flex-direction: row
-        #kana-image, #options
-            width: $panel-size
-            height: $panel-size
-        #panel-delimiter
-            width: 1px
-            height: 100%
-            margin: 2em 5em
-            background-color: colors.$gray
-        #options
-            display: grid
-            grid-template-rows: 1fr 1fr
-            grid-template-columns: 1fr 1fr 
-            gap: 1.5em
-            .option
-                display: flex
-                align-content: center
-                justify-content: space-evenly
-                flex-wrap: wrap
-                border-radius: 12px
-                box-shadow: 2px 3px 8px #0003
-                cursor: pointer
-                transition: 300ms
-                font-size: 2.25em
-                &:hover
-                    transform: scale(1.05) rotate(5deg)
-                &.revealed
-                    cursor: not-allowed
-                    &.correct
-                        background: colors.$sakura-gradient
-                    &.incorrect
-                        background: colors.$gray
-    
-    #title
-        font-size: 14px
-        color: colors.$gray
-        text-transform: lowercase
-        &::first-letter
-            text-transform: uppercase
+            text-align: center
+#game-column-container
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    width: 50%
+    height: 100%
+    &.completed
+        animation: game-completed 300ms ease-in-out
+        opacity: 0
+        transform: scale(1.5)
+#game-progress-bar-container
+    width: 100%
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+#exit-button
+    width: 12px
+    margin-right: 24px
+    cursor: pointer
+#game-progress-bar
+    width: 100%
+    height: 8px
+    *
+        border-radius: 50em
+#game-progress-bar-full
+    width: 100%
+    height: 100%
+    background-color: colors.$gray
+#game-progress-bar-completed
+    height: 100%
+    transition: 200ms ease-out
+    &.hiragana
+        background: colors.$sakura-gradient
+        &.in-combo
+            background: colors.$combo-gradient-hiragana
+            box-shadow: 0 0 9px colors.$sakura
+    &.katakana
+        background: colors.$turquoise-gradient
+        &.in-combo
+            background: colors.$combo-gradient-katakana
+            box-shadow: 0 0 9px #0ED2F7
+
+#game-panels
+    padding-top: 1em
+    padding-bottom: .5em
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: row
+
+#kana-image, #options
+    width: $panel-size
+    height: $panel-size
+
+#panel-delimiter
+    width: 1px
+    height: 100%
+    margin: 2em 5em
+    background-color: colors.$gray
+
+#options
+    display: grid
+    grid-template-rows: 1fr 1fr
+    grid-template-columns: 1fr 1fr 
+    gap: 1.5em
+
+.option
+    display: flex
+    align-content: center
+    justify-content: space-evenly
+    flex-wrap: wrap
+    border-radius: 12px
+    box-shadow: 2px 3px 8px #0003
+    cursor: pointer
+    transition: 300ms
+    font-size: 2.25em
+    &:hover
+        transform: scale(1.05) rotate(5deg)
+    &.revealed
+        cursor: not-allowed
+        &.correct
+            background: colors.$sakura-gradient
+        &.incorrect
+            background: colors.$gray
+
+#title
+    font-size: 14px
+    color: colors.$gray
+    text-transform: lowercase
+    &::first-letter
+        text-transform: uppercase
 
 @keyframes particle-rotation
     from
@@ -419,8 +445,9 @@ a
 #document-container
     width: 90%
     padding: 2em 5% 2em
-    #document-logo
-        height: 2em
+
+#document-logo
+    height: 2em
 
 #error-container
     width: 100%
@@ -429,50 +456,6 @@ a
     flex-direction: column
     justify-content: center
     align-items: center
-
-@media screen and (max-width: 580px)
-    #game-container
-        #game-panels
-            flex-direction: column !important
-            width: 100% !important
-            flex-grow: 1 !important
-            #kana-image
-                width: 60%
-                height: auto
-            #options
-                width: 100% !important
-                justify-content: space-around
-                .option
-                    // border-radius: 0
-                    // box-shadow: unset !important
-                    // border: 1px solid #aaa
-                    &:nth-child(4n), &:nth-child(4n - 1)
-                        margin-top: unset !important
-                    &:nth-child(4n - 2), &:nth-child(4n - 3)
-                        margin-bottom: unset !important
-                    &:nth-child(2n)
-                        margin-right: unset !important
-                    &:nth-child(2n + 1)
-                        margin-left: unset !important
-            #panel-delimiter
-                display: none !important
-        #game-column-container
-            justify-content: space-between !important
-            width: 100% !important
-            #game-progress-bar-container
-                flex-direction: column-reverse !important
-                align-items: flex-start !important  
-                #game-progress-bar
-                    width: 100% !important
-                    *
-                        border-radius: 0 !important
-                        height: 16px !important
-                #exit-button
-                    margin: 32px !important
-                    width: 24px
-                    height: auto
-            #title
-                display: none
 
 #introduction-container
     display: flex
@@ -681,6 +664,57 @@ a
         #keep-progress-button
             color: colors.$gray
             text-decoration: underline
+
+
+//  -------------------------- media -------------------------
+@media screen and (max-width: 580px)
+    #game-panels
+        flex-direction: column !important
+        width: 100% !important
+        flex-grow: 1 !important
+
+    #kana-image
+        width: 60%
+        height: auto
+
+    #options
+        width: 100% !important
+        justify-content: space-around
+        .option
+            &:nth-child(4n), &:nth-child(4n - 1)
+                margin-top: unset !important
+            &:nth-child(4n - 2), &:nth-child(4n - 3)
+                margin-bottom: unset !important
+            &:nth-child(2n)
+                margin-right: unset !important
+            &:nth-child(2n + 1)
+                margin-left: unset !important
+
+    #panel-delimiter
+        display: none !important
+
+    #game-column-container
+        justify-content: space-between !important
+        width: 100% !important
+
+    #game-progress-bar-container
+        flex-direction: column-reverse !important
+        align-items: flex-start !important  
+
+    #game-progress-bar
+        width: 100% !important
+        *
+            border-radius: 0 !important
+            height: 16px !important
+
+    #exit-button
+        margin: 32px !important
+        width: 24px
+        height: auto
+
+    #title
+        display: none
+
 
 // @media only screen and (min-width: 801px)
 //     .row-card
