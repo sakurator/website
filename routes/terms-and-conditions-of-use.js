@@ -1,10 +1,11 @@
-var express = require("express");
-var router = express.Router();
+import { Router } from "express";
 
-router.get("/", function (req, res, next) {
-	res.render("terms-of-use", {
-		title: "Website Terms and Conditions of Use",
-	});
+var router = Router();
+
+router.get("/", function (_, res) {
+    res.render("terms-of-use", {
+        title: "Website Terms and Conditions of Use",
+    });
 });
 
-module.exports = router;
+export default router;
