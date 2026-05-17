@@ -1,3 +1,4 @@
 /node_modules
 /.env
 /compose.override.yaml
+/prisma/migrations
