@@ -18,7 +18,7 @@ router.get("/", async function (req, res) {
 
     res.render("index", {
         alphabet: "Hiragana",
-        title: "Учи хирагану и катакану бесплатно!",
+        title: "Learn hiragana and katakana for free!",
         rows: rows,
         cookies: req.cookies,
     });

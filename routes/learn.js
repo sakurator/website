@@ -60,7 +60,7 @@ router.get("/:alphabet/:row", async function (req, res) {
     if (rowLetters.length == 0) return res.status(404);
 
     res.render("learn", {
-        title: "Учить набор '" + alphabet + " " + letter + "'",
+        title: `Learn '${alphabet} ${letter}' row`,
         rowLetters: rowLetters,
         allLetters: allLetters,
         alphabet: alphabet,
