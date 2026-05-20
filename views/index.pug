@@ -1,12 +1,9 @@
 extends layout
 
 block head
-  script(src="/javascripts/index.js", defer)  
+  script(src="/javascripts/index.js", defer)
   script.
     var rows = JSON.parse(`!{JSON.stringify(rows, (key, value) => typeof value === 'bigint' ? value.toString() : value)}`)
-  //- Yandex.RTB
-  //- <script>window.yaContextCb=window.yaContextCb||[]</script>
-  //- script(src="https://yandex.ru/ads/system/context.js", async)
 
 block content
   for sound in ['click', 'hover', 'alphabet_switch_hiragana', 'alphabet_switch_katakana']
@@ -14,6 +11,8 @@ block content
             source(src="/sounds/" + sound + ".mp3", type="audio/mpeg")
   #content-container
     #left-panel
+      #logo-container
+        img(src="/images/logos/titled_gray.svg")#logo
       #alphabet-switch-panel
         span.alphabet-switch-title.enabled#hiragana-alphabet-switch-title Hiragana
         #alphabet-switch
@@ -24,16 +23,16 @@ block content
         for row in rows
           .row(id="row-" + row.letter)
             .row-card(class=alphabet.toLowerCase())
+              .row-title-container
+                img.row-completed-icon(id="completed-" + row.letter + "-" + row.petalsToComplete, src="/images/icons/completed.svg")
+                span.row-title= row.name
               img.row-kana(src="/images/letters/" + alphabet + "_" + row.letter + "a" + ".svg")
               .row-progress
                 .row-progress-full
                   .row-progress-completed.hiragana(id="progress-" + row.letter + "-" + row.petalsToComplete)
-            .row-description
-              .row-title-container
-                img.row-completed-icon(id="completed-" + row.letter + "-" + row.petalsToComplete, src="/images/icons/completed.svg")
-                span.row-title= row.name
-              span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petalsToComplete)
-                img(src="/images/particles/petal_1.svg")
+              .row-description
+                span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petalsToComplete)
+                  img(src="/images/particles/petal_1.svg")
       span#footer 
         | © Sakurator 2022-#{new Date().getFullYear()}
         |
@@ -48,12 +47,10 @@ block content
         button#progress-reset-button here
         |  to reset your progress
     #right-panel
-      #logo-container
-        img(src="/images/logos/titled_gray.svg")#logo
       img(src="/images/illustrations/sakura.svg")#sakura-illustration
   #progress-reset-container
-    span#progress-reset-title Are you sure that you want to reset all your progress
     img#progress-reset-illustration(src="/images/illustrations/trash-can.svg")
+    span#progress-reset-title Are you sure that you want to reset all your progress
     #progress-reset-buttons-container
-      button#reset-progress-button Yes, reset (No undo!)
-      button#keep-progress-button No, keep my progress
+      button#reset-progress-button Yes, reset ALL my progress (⚠ No undo!)
+      button#keep-progress-button No, keep my progress and return to main menu

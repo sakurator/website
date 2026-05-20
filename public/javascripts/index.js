@@ -18,14 +18,10 @@ function updatePetalScores() {
         const letter = progressBar.children[0].id.split("-")[1];
         const petalsEarned = petals(alphabet, letter);
         const petalsToComplete = parseInt(progressBar.children[0].id.split("-")[2]);
-        const progress = petalsEarned / petalsToComplete * 100;
+        const progress = Math.min(100, petalsEarned / petalsToComplete * 100);
 
-        if (progress < 100) {
-            progressBar.style.display = "flex";
-            progressBar.children[0].style.width = `${progress}%`;
-        } else {
-            progressBar.style.display = "none";
-        }
+        progressBar.style.display = "flex";
+        progressBar.children[0].style.width = `${progress}%`;
     });
 
     document.querySelectorAll(".row-completed-icon").forEach((icon) => {

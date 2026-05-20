@@ -1,11 +1,12 @@
 @use "sass:color"
+@use "sass:math"
 @use "colors"
 
-$result-title-size: 64px
+$result-title-size: 4rem
 $panel-size: 12em
 $space-between-options: .5em
 
-@font-face 
+@font-face
     font-family: "Golos Text VF"
     src: url("../fonts/golos.ttf")
 
@@ -17,24 +18,18 @@ $space-between-options: .5em
 
 html, body
     margin: 0
-    padding: 0 
+    padding: 0
     width: 100%
     height: 100%
-    overflow: hidden
+    contain: paint
     user-select: none
     position: relative
-    
-#footer
-    margin-bottom: 3%
-
-#alphabet-switch-panel
-    margin-top: 3%
 
 a
     color: colors.$sakura
     text-decoration: none
 
-@keyframes app__fade-in
+@keyframes content-container__fade-in
     from
         transform: scale(1.01)
         opacity: 0
@@ -42,28 +37,25 @@ a
 #content-container
     display: flex
     height: 100vh
-    animation: app__fade-in 400ms ease-out
-    padding-block: 5rem
+    animation: content-container__fade-in 400ms ease-out
+    padding-inline: 12rem
+    padding-block: 8rem
 
 #left-panel
     display: flex
     flex-direction: column
-    flex-basis: 40%
-    align-items: center
-    justify-content: space-around
+    justify-content: space-between
 
 #alphabet-switch-panel
-    width: 100%
     display: flex
-    flex-direction: row
     align-items: center
     justify-content: center
 
 #alphabet-switch
     position: relative
     display: inline-block
-    width: 60px
-    height: 26px
+    width: 4rem
+    height: 2rem
 
 #alphabet-switch-checkbox
     opacity: 0
@@ -73,9 +65,7 @@ a
 #alphabet-switch-checkbox:checked + #alphabet-switch-slider
     background-color: color.adjust(colors.$sakura, $hue: 180, $blackness: 20%)
     &:before
-        -webkit-transform: translateX(34px)
-        -ms-transform: translateX(34px)
-        transform: translateX(34px)
+        transform: translateX(2rem)
 
 #alphabet-switch-checkbox:focus + #alphabet-switch-slider
     box-shadow: 0 0 1px colors.$sakura
@@ -83,58 +73,42 @@ a
 #alphabet-switch-slider
     position: absolute
     cursor: pointer
-    top: 0
-    left: 0
-    right: 0
-    bottom: 0
-    background-color: colors.$sakura
-    transition: .2s
-    border-radius: 50rem
+    inset: 0
+    background: colors.$sakura
+    transition: 200ms
+    border-radius: 999lvmax
     &:before
-        position: absolute
         content: ""
-        height: 18px
-        width: 18px
-        left: 4px
-        bottom: 4px
-        background-color: white
-        transition: .2s
-        border-radius: 50rem
-        transition-timing-function: ease-in-out
+        background: white
+        position: absolute
+        height: 1rem
+        width: 1rem
+        left: 0.5rem
+        bottom: 0.5rem
+        transition: 200ms ease-in-out
+        border-radius: 100%
 
 .alphabet-switch-title
-    font-size: 24px
-    padding: 0 16px 0
+    font-size: 2rem
+    padding-inline: 1rem
     color: colors.$gray
-    transition: .4s
+    transition: 400ms
     &.enabled
         color: colors.$black
 
 #rows-container
-    display: flex
-    text-align: center
-    flex-wrap: wrap
-    align-items: center
-    justify-content: center
-    height: auto
-    width: 80%
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    gap: 2rem
 
 .row
     display: flex
     flex-direction: column
-    justify-content: center
     align-items: center
-    width: 33%
-    padding: .5em 0 .5em
+    justify-content: center
+    padding-inline: 0.5em
     cursor: pointer
     &:hover
-        .row-card
-            transform: scale(1.07) rotate(2deg)
-            box-shadow: 35px 35px 70px #0002
-            &.hiragana
-                border: 1px colors.$sakura solid
-            &.katakana
-                border: 1px colors.$turquoise solid
         .row-kana
             opacity: 0.85
         .row-description
@@ -145,19 +119,27 @@ a
 
 .row-card
     border: 0px solid transparent
-    width: 65%
-    height: 65%
-    aspect-ratio: 1 / 1
-    padding: 5% 2.5%
+    width: 10rem
+    height: 10rem
+    padding: 1rem
+    aspect-ratio: 1
     display: flex
     flex-direction: column
-    justify-content: center
     align-items: center
-    border-radius: 15px
-    box-shadow: 1px 1px 8px #0002
+    justify-content: center
+    border-radius: 1rem
+    box-shadow: 0.1rem 0.1rem 0.5rem #00000022
     transition: 150ms ease-in
-    z-index: 10
     box-sizing: border-box
+    z-index: 5
+    &:hover
+        transform: scale(1.07) rotate(2deg)
+        box-shadow: 0.5rem 0.5rem 0.8rem #00000022
+        z-index: 10
+        &.hiragana
+            border: 1px colors.$sakura solid
+        &.katakana
+            border: 1px colors.$turquoise solid
 
 .row-kana
     width: 70%
@@ -165,10 +147,11 @@ a
 
 .row-progress
     width: 70%
-    height: 5px
+    min-height: 5px
     *
         border-radius: 50rem
         height: 100%
+
 .row-progress-completed
     &.hiragana
         background: colors.$sakura-gradient
@@ -187,7 +170,6 @@ a
 
 .row-title-container
     display: flex
-    flex-direction: row
     align-items: center
     justify-content: center
 
@@ -197,11 +179,11 @@ a
     display: none
 
 .row-title
-    font-size: 12px
+    font-size: 1rem
+    line-height: 1rem
 
 .row-subtitle
     display: flex
-    flex-direction: row
     align-items: center
     column-gap: 0.33em
     justify-content: center
@@ -219,17 +201,9 @@ a
 #right-panel
     display: flex
     flex-direction: column
-    width: 60%
     height: 100%
+    flex: 1
     align-items: end
-    justify-content: space-between
-
-#logo-container
-    padding-right: 2em
-    padding-top: calc(100% / 24)
-    display: flex
-    flex-direction: column
-    align-items: flex-end
 
 #yandex_rtb_R-A-1622843-1
     width: 320px
@@ -246,26 +220,19 @@ a
     bottom: 0
     right: 0
 
-@media only screen and (max-width: 1030px)
-    #right-panel
-        display: none
-    #left-panel
-        width: 100%
-
 @keyframes transition-circle-expansion
     from
         transform: scale(0)
     to
-        transform: scale(1500)    
+        transform: scale(200 * math.sqrt(2))
 
 #transition-circle
     z-index: 9999
     border-radius: 50rem
     position: absolute
-    animation: transition-circle-expansion cubic-bezier(0.5, 1, 0.5, 1) 1500ms
-    width: 2px
-    height: 2px 
-    transform: scale(1500)
+    animation: transition-circle-expansion cubic-bezier(0.5, 1, 0.5, 1) 1500ms forwards
+    width: 1lvmax
+    height: 1lvmax 
     &.hiragana
         background-color: colors.$sakura
     &.katakana
@@ -323,124 +290,129 @@ a
         display: inline-block
         animation: game-result-show 1600ms ease-in
         opacity: 0
-        .petals-earned
-            font-size: $result-title-size
-            display: inline-block
-            line-height: 1em
-            margin-right: .25em
-            letter-spacing: .1em
-        .petals-earned-icon
-            width: calc($result-title-size / 4 * 3)
-        .petals-earned-for
-            font-size: 16px
-            color: colors.$gray
-            width: 100%
-            text-align: center
+
+.petals-earned
+    font-size: $result-title-size
+    display: inline-block
+    line-height: 1em
+    margin-right: .25em
+    letter-spacing: .1em
+
+.petals-earned-icon
+    width: calc($result-title-size / 4 * 3)
+
+.petals-earned-for
+    font-size: 16px
+    color: colors.$gray
+    width: 100%
+    text-align: center
+
 #game-column-container
     display: flex
     align-items: center
     justify-content: center
     flex-direction: column
     width: 50%
-    height: 100%
+    row-gap: 1rem
     &.completed
         animation: game-completed 300ms ease-in-out
         opacity: 0
         transform: scale(1.5)
+
 #game-progress-bar-container
     width: 100%
     display: flex
     flex-direction: row
     align-items: center
     justify-content: center
+
 #exit-button
     width: 12px
     margin-right: 24px
     cursor: pointer
+
 #game-progress-bar
     width: 100%
-    height: 8px
+    height: 2rem
     *
-        border-radius: 50em
+        border-radius: 9999rem
+
 #game-progress-bar-full
     width: 100%
     height: 100%
+    contain: paint
     background-color: colors.$gray
+
+@keyframes game-progress-bar-completed__in-combo
+    from
+        background-position: 0% 0%
+    to
+        background-position: 500% 500%
+
 #game-progress-bar-completed
     height: 100%
-    transition: 200ms ease-out
+    transition: 200ms cubic-bezier(.71,1.61,.15,2.09)
+    background-size: 500% 500%
+    &.in-combo
+        animation: game-progress-bar-completed__in-combo 1000ms infinite linear reverse
     &.hiragana
-        background: colors.$sakura-gradient
+        background-image: colors.$sakura-gradient
         &.in-combo
-            background: colors.$combo-gradient-hiragana
-            box-shadow: 0 0 9px colors.$sakura
+            background-image: colors.$combo-gradient-hiragana
+            box-shadow: 0 0 9px colors.$salmon
     &.katakana
-        background: colors.$turquoise-gradient
+        background-image: colors.$turquoise-gradient
         &.in-combo
-            background: colors.$combo-gradient-katakana
-            box-shadow: 0 0 9px #0ED2F7
+            background-image: colors.$combo-gradient-katakana
+            box-shadow: 0 0 9px colors.$deepsea
 
 #game-panels
     padding-top: 1em
     padding-bottom: .5em
+
+#kana-image
+    width: 50lvmin
+
+#options
     display: flex
     align-items: center
     justify-content: center
-    flex-direction: row
-
-#kana-image, #options
-    width: $panel-size
-    height: $panel-size
-
-#panel-delimiter
-    width: 1px
-    height: 100%
-    margin: 2em 5em
-    background-color: colors.$gray
-
-#options
-    display: grid
-    grid-template-rows: 1fr 1fr
-    grid-template-columns: 1fr 1fr 
-    gap: 1.5em
+    column-gap: 1.5em
 
 .option
-    display: flex
-    align-content: center
-    justify-content: space-evenly
-    flex-wrap: wrap
-    border-radius: 12px
-    box-shadow: 2px 3px 8px #0003
+    display: grid
+    place-items: center
+    border-radius: 0.5rem
+    box-shadow: 0.125rem 0.125rem 0.5rem #00000011
     cursor: pointer
-    transition: 300ms
-    font-size: 2.25em
+    transition: 175ms ease-in-out
+    font-size: 4rem
+    width: 8rem
+    height: auto
+    line-height: 1rem
+    aspect-ratio: 1
+    font-weight: 1000
+    border: 1px solid colors.$gray
     &:hover
-        transform: scale(1.05) rotate(5deg)
-    &.revealed
-        cursor: not-allowed
-        &.correct
-            background: colors.$sakura-gradient
-        &.incorrect
-            background: colors.$gray
+        box-shadow: 0.25rem 0.25rem 0.9rem #0000000C
+        transform: scale(1.10)
+        &.hiragana
+            border: 1px solid colors.$sakura
+        &.katakana
+            border: 1px solid colors.$turquoise
+
+@keyframes game-title__fade-out
+    from
+        opacity: 0
+    20%
+        opacity: 1
+    to
+        opacity: 0
 
 #title
-    font-size: 14px
+    font-size: 1.5rem
     color: colors.$gray
-    text-transform: lowercase
-    &::first-letter
-        text-transform: uppercase
-
-@keyframes particle-rotation
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(360deg)
-
-.particle
-    position: absolute
-    animation: particle-rotation 2s ease-in-out infinite alternate-reverse 
-    z-index: 1000
-    pointer-events: none
+    animation: game-title__fade-out 10000ms ease-out forwards
 
 #document-container
     width: 90%
@@ -464,23 +436,26 @@ a
     width: 100%
     height: 100%
     column-gap: 3em
-    .letter-introduction
-        display: flex
-        align-items: center
-        justify-content: center
-        flex-direction: column
-        display: none
+
+.letter-introduction
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    display: none
+    &.introducing
+        animation: letter-introduction 400ms ease-in-out forwards, letter-introduction-out 600ms 2000ms ease-in-out forwards
         .letter-introduction-image
-            width: 8em
-            aspect-ratio: 1 / 1
+            animation: letter-image-introduction-jump 400ms ease-in-out forwards
         .letter-introduction-name
-            font-size: 2em
-        &.introducing
-            animation: letter-introduction 400ms ease-in-out forwards, letter-introduction-out 600ms 2000ms ease-in-out forwards
-            .letter-introduction-image
-                animation: letter-image-introduction-jump 400ms ease-in-out forwards
-            .letter-introduction-name
-                animation: letter-name-introduction-jump 400ms ease-in-out forwards
+            animation: letter-name-introduction-jump 400ms ease-in-out forwards
+
+.letter-introduction-image
+    width: 8em
+    aspect-ratio: 1 / 1
+
+.letter-introduction-name
+    font-size: 2em
 
 @keyframes letter-introduction
     from
@@ -635,35 +610,45 @@ a
     align-items: center
     width: 100%
     height: 100%
-    row-gap: 6em
     &.visible
         display: flex
-        animation: progress-reset-container-fade-in 300ms ease-in-out
-        #progress-reset-illustration
-            animation: progress-reset-illustration-fade-in 400ms ease-in-out
-    #progress-reset-title
-        font-weight: 500
-        font-size: 1.5em
-    #progress-reset-illustration
-        width: 12em
-    #progress-reset-buttons-container
-        display: flex
-        flex-direction: column
-        row-gap: 1em
-        align-items: center
-        jusify-content: center
-        button
-            all: unset
-            cursor: pointer
-        #reset-progress-button
-            background: colors.$sakura
-            color: white
-            padding: 0.5em 1em
-            border-radius: 0.25em
-        #keep-progress-button
-            color: colors.$gray
-            text-decoration: underline
+        animation: progress-reset-container-fade-in 170ms ease-in-out
 
+#progress-reset-illustration
+    animation: progress-reset-illustration-fade-in 200ms ease-in-out
+
+#progress-reset-title
+    font-weight: 500
+    font-size: 1.5em
+    margin-block-end: 0.8rem
+
+#progress-reset-illustration
+    width: 12em
+    margin-block-end: 4rem
+
+#progress-reset-buttons-container
+    display: flex
+    column-gap: 1em
+    align-items: center
+    button
+        padding: 0.5em 1em
+        border: none
+        outline: none
+        cursor: pointer
+        text-decoration: none
+        font-size: 1rem
+
+#reset-progress-button
+    background: colors.$sakura
+    font-weight: 800
+    color: white
+    border-radius: 0.25em
+
+#keep-progress-button
+    background: transparent
+    color: colors.$gray
+    &:hover
+        background: color.adjust(colors.$gray, $alpha: -0.9)
 
 @media screen and (max-width: 580px)
     #game-panels
@@ -712,3 +697,9 @@ a
 
     #title
         display: none
+
+@media only screen and (max-width: 1030px)
+    #right-panel
+        display: none
+    #left-panel
+        width: 100%
