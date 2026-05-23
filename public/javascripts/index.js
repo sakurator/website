@@ -109,7 +109,7 @@ hiraganaTitleEl.addEventListener("click", () =>
 /**************************************************************************************************
  *                                          Event sounds                                          *
  **************************************************************************************************/
-document.querySelectorAll(".row").forEach((row) => {
+document.querySelectorAll(".row-card").forEach((row) => {
     row.addEventListener("mouseenter", () => play("hover"));
     row.addEventListener("click", () => play("click"));
 });
@@ -117,7 +117,7 @@ document.querySelectorAll(".row").forEach((row) => {
 /**************************************************************************************************
  *                                       Opening the lessons                                      *
  **************************************************************************************************/
-document.querySelectorAll(".row").forEach((row) => {
+document.querySelectorAll(".row-card").forEach((row) => {
     row.addEventListener("click", (event) => {
         let mouse = { x: event.clientX, y: event.clientY };
         let transitionCircle = document.createElement("div");
@@ -139,36 +139,6 @@ document.querySelectorAll(".row").forEach((row) => {
         );
     });
 });
-
-/**************************************************************************************************
- *                                          Progress reset                                        *
- **************************************************************************************************/
-
-document
-    .getElementById("progress-reset-button")
-    .addEventListener("click", () => {
-        progressResetContainerEl.classList.add("visible");
-        contentContainerEl.style.display = "none";
-    });
-
-document
-    .getElementById("reset-progress-button")
-    .addEventListener("click", () => {
-        for (let { letter } of rows) {
-            for (let alphabet of ["hiragana", "katakana"]) {
-                eraseCookie(`${alphabet}_${letter}`);
-            }
-        }
-
-        window.location.href = "/";
-    });
-
-document
-    .getElementById("keep-progress-button")
-    .addEventListener("click", () => {
-        progressResetContainerEl.classList.remove("visible");
-        contentContainerEl.style.display = null;
-    });
 
 updatePetalScores();
 
