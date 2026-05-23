@@ -17,6 +17,9 @@ html, body {
   contain: paint;
   user-select: none;
   position: relative;
+  font-size: clamp(1lvh, 1.5rem, 2lvh);
+  background: url(/images/background.jpg);
+  background-size: cover;
 }
 
 a {
@@ -32,20 +35,21 @@ a {
 }
 #content-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 3rem;
   height: 100vh;
   animation: content-container__fade-in 400ms ease-out;
-  padding-inline: 12rem;
+  padding-inline: clamp(3lvw, 12rem, 10lvw);
   padding-block: 8rem;
-}
-
-#left-panel {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 #alphabet-switch-panel {
   display: flex;
+  column-gap: 0.75rem;
   align-items: center;
   justify-content: center;
 }
@@ -53,8 +57,9 @@ a {
 #alphabet-switch {
   position: relative;
   display: inline-block;
-  width: 4rem;
-  height: 2rem;
+  width: 4em;
+  height: 2em;
+  font-size: 1.5rem;
 }
 
 #alphabet-switch-checkbox {
@@ -67,11 +72,7 @@ a {
   background-color: rgb(109, 203, 199.1103448276);
 }
 #alphabet-switch-checkbox:checked + #alphabet-switch-slider:before {
-  transform: translateX(2rem);
-}
-
-#alphabet-switch-checkbox:focus + #alphabet-switch-slider {
-  box-shadow: 0 0 1px #FE6D73;
+  transform: translateX(2em);
 }
 
 #alphabet-switch-slider {
@@ -79,29 +80,30 @@ a {
   cursor: pointer;
   inset: 0;
   background: #FE6D73;
-  transition: 200ms;
+  transition: 200ms cubic-bezier(0.29, 1.52, 0.11, 1);
   border-radius: 999lvmax;
 }
 #alphabet-switch-slider:before {
   content: "";
   background: white;
   position: absolute;
-  height: 1rem;
-  width: 1rem;
-  left: 0.5rem;
-  bottom: 0.5rem;
-  transition: 200ms ease-in-out;
+  height: 1em;
+  width: 1em;
+  left: 0.5em;
+  bottom: 0.5em;
+  transition: 200ms cubic-bezier(0.29, 1.52, 0.11, 1);
   border-radius: 100%;
 }
 
 .alphabet-switch-title {
-  font-size: 2rem;
-  padding-inline: 1rem;
-  color: #CCCCCC;
-  transition: 400ms;
+  font-size: 2em;
+  color: white;
+  opacity: 0.2;
+  transition: 200ms cubic-bezier(0.29, 1.52, 0.11, 1);
+  font-weight: 1000;
 }
 .alphabet-switch-title.enabled {
-  color: #000000;
+  opacity: 1;
 }
 
 #rows-container {
@@ -110,25 +112,8 @@ a {
   gap: 2rem;
 }
 
-.row {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-inline: 0.5em;
-  cursor: pointer;
-}
-.row:hover .row-kana {
-  opacity: 0.85;
-}
-.row:hover .row-description {
-  opacity: 1;
-}
-.row:active .row-card {
-  transform: scale(0.7) rotate(-3deg);
-}
-
 .row-card {
+  background: white;
   border: 0px solid transparent;
   width: 10rem;
   height: 10rem;
@@ -142,18 +127,22 @@ a {
   box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.1333333333);
   transition: 150ms ease-in;
   box-sizing: border-box;
-  z-index: 5;
+  cursor: pointer;
 }
 .row-card:hover {
   transform: scale(1.07) rotate(2deg);
   box-shadow: 0.5rem 0.5rem 0.8rem rgba(0, 0, 0, 0.1333333333);
-  z-index: 10;
 }
 .row-card:hover.hiragana {
   border: 1px #FE6D73 solid;
 }
 .row-card:hover.katakana {
   border: 1px #6DCBC7 solid;
+}
+
+*:has(.row-card:hover) .row-card:not(:hover) {
+  opacity: 0.3;
+  scale: 0.94;
 }
 
 .row-kana {
@@ -185,7 +174,7 @@ a {
 .row-description {
   display: flex;
   flex-direction: column;
-  padding-top: 0.25em;
+  padding-top: 0.25rem;
   transition: 100ms ease-out;
 }
 
@@ -209,20 +198,20 @@ a {
 .row-subtitle {
   display: flex;
   align-items: center;
-  column-gap: 0.33em;
+  column-gap: 0.33rem;
   justify-content: center;
   font-size: 11px;
   color: #CCCCCC;
 }
 .row-subtitle > img {
-  width: 1em;
+  width: 1rem;
   aspect-ratio: 1/1;
 }
 
 #footer {
   text-align: center;
-  font-size: 12px;
-  color: #CCCCCC;
+  color: white;
+  opacity: 0.3;
 }
 
 #right-panel {
@@ -233,14 +222,24 @@ a {
   align-items: end;
 }
 
-#yandex_rtb_R-A-1622843-1 {
-  width: 320px;
-  height: 100px;
+#logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.5rem;
 }
 
 #logo {
-  height: 24px;
-  margin-bottom: 24px;
+  width: 1.5rem;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+#logo-title {
+  font-weight: 100;
+  color: white;
+  text-transform: lowercase;
+  transform: translateY(0.1em);
 }
 
 #sakura-illustration {
@@ -249,6 +248,8 @@ a {
   position: absolute;
   bottom: 0;
   right: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 @keyframes transition-circle-expansion {
@@ -345,9 +346,9 @@ a {
 .petals-earned {
   font-size: 4rem;
   display: inline-block;
-  line-height: 1em;
-  margin-right: 0.25em;
-  letter-spacing: 0.1em;
+  line-height: 1rem;
+  margin-right: 0.25rem;
+  letter-spacing: 0.1rem;
 }
 
 .petals-earned-icon {
@@ -436,8 +437,8 @@ a {
 }
 
 #game-panels {
-  padding-top: 1em;
-  padding-bottom: 0.5em;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 #kana-image {
@@ -448,7 +449,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  column-gap: 1.5em;
+  column-gap: 1.5rem;
 }
 
 .option {
@@ -458,8 +459,8 @@ a {
   box-shadow: 0.125rem 0.125rem 0.5rem rgba(0, 0, 0, 0.0666666667);
   cursor: pointer;
   transition: 175ms ease-in-out;
-  font-size: 4rem;
-  width: 8rem;
+  font-size: 5rem;
+  min-width: 8rem;
   height: auto;
   line-height: 1rem;
   aspect-ratio: 1;
@@ -496,11 +497,11 @@ a {
 
 #document-container {
   width: 90%;
-  padding: 2em 5% 2em;
+  padding: 2rem 5% 2rem;
 }
 
 #document-logo {
-  height: 2em;
+  height: 2rem;
 }
 
 #error-container {
@@ -518,7 +519,7 @@ a {
   justify-content: center;
   width: 100%;
   height: 100%;
-  column-gap: 3em;
+  column-gap: 3rem;
 }
 
 .letter-introduction {
@@ -539,12 +540,12 @@ a {
 }
 
 .letter-introduction-image {
-  width: 8em;
-  aspect-ratio: 1/1;
+  width: 8rem;
+  aspect-ratio: 1;
 }
 
 .letter-introduction-name {
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 @keyframes letter-introduction {
@@ -574,7 +575,7 @@ a {
     transform: scale(1);
   }
   15% {
-    transform: scale(1.1, 1.2) rotate(4deg) translateY(-0.33em);
+    transform: scale(1.1, 1.2) rotate(4deg) translateY(-0.33rem);
   }
   to {
     transform: scale(1);
@@ -642,7 +643,7 @@ a {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin-bottom: 4em;
+  margin-bottom: 4rem;
   opacity: 0;
   animation: row-completed-text-fade-in 1000ms 1000ms ease-in-out forwards, row-completed-text-fade-out 1000ms 7600ms forwards;
 }
@@ -650,11 +651,11 @@ a {
 @keyframes row-completed-text-fade-in {
   from {
     opacity: 0;
-    margin-bottom: 0em;
+    margin-bottom: 0;
   }
   to {
     opacity: 1;
-    margin-bottom: 4em;
+    margin-bottom: 4rem;
   }
 }
 @keyframes row-completed-text-fade-out {
@@ -667,7 +668,7 @@ a {
 }
 #row-completed-title {
   font-weight: 500;
-  font-size: 1.6em;
+  font-size: 1.6rem;
 }
 
 #row-completed-subtitle {
@@ -745,22 +746,22 @@ a {
 
 #progress-reset-title {
   font-weight: 500;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   margin-block-end: 0.8rem;
 }
 
 #progress-reset-illustration {
-  width: 12em;
+  width: 12rem;
   margin-block-end: 4rem;
 }
 
 #progress-reset-buttons-container {
   display: flex;
-  column-gap: 1em;
+  column-gap: 1rem;
   align-items: center;
 }
 #progress-reset-buttons-container button {
-  padding: 0.5em 1em;
+  padding: 0.5rem 1rem;
   border: none;
   outline: none;
   cursor: pointer;
@@ -772,7 +773,7 @@ a {
   background: #FE6D73;
   font-weight: 800;
   color: white;
-  border-radius: 0.25em;
+  border-radius: 0.25rem;
 }
 
 #keep-progress-button {
@@ -784,33 +785,9 @@ a {
 }
 
 @media screen and (max-width: 580px) {
-  #game-panels {
-    flex-direction: column !important;
-    width: 100% !important;
-    flex-grow: 1 !important;
-  }
   #kana-image {
     width: 60%;
     height: auto;
-  }
-  #options {
-    width: 100% !important;
-    justify-content: space-around;
-  }
-  #options .option:nth-child(4n), #options .option:nth-child(4n-1) {
-    margin-top: unset !important;
-  }
-  #options .option:nth-child(4n-2), #options .option:nth-child(4n-3) {
-    margin-bottom: unset !important;
-  }
-  #options .option:nth-child(2n) {
-    margin-right: unset !important;
-  }
-  #options .option:nth-child(2n+1) {
-    margin-left: unset !important;
-  }
-  #panel-delimiter {
-    display: none !important;
   }
   #game-column-container {
     justify-content: space-between !important;
@@ -839,9 +816,6 @@ a {
 @media only screen and (max-width: 1030px) {
   #right-panel {
     display: none;
-  }
-  #left-panel {
-    width: 100%;
   }
 }
 

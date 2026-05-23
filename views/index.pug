@@ -10,9 +10,9 @@ block content
      audio(preload="auto")
             source(src="/sounds/" + sound + ".mp3", type="audio/mpeg")
   #content-container
-    #left-panel
       #logo-container
-        img(src="/images/logos/titled_gray.svg")#logo
+        img#logo(src="/images/logos/sakurator.svg")
+        span#logo-title Sakurator
       #alphabet-switch-panel
         span.alphabet-switch-title.enabled#hiragana-alphabet-switch-title Hiragana
         #alphabet-switch
@@ -21,8 +21,7 @@ block content
         span.alphabet-switch-title#katakana-alphabet-switch-title Katakana
       #rows-container
         for row in rows
-          .row(id="row-" + row.letter)
-            .row-card(class=alphabet.toLowerCase())
+            .row-card(id="row-" + row.letter, class=alphabet.toLowerCase())
               .row-title-container
                 img.row-completed-icon(id="completed-" + row.letter + "-" + row.petalsToComplete, src="/images/icons/completed.svg")
                 span.row-title= row.name
@@ -33,21 +32,6 @@ block content
               .row-description
                 span.row-subtitle(id="subtitle-" + row.letter + "-" + row.petalsToComplete)
                   img(src="/images/particles/petal_1.svg")
-      span#footer 
-        | © Sakurator 2022-#{new Date().getFullYear()}
-        |
-        a(href="https://github.com/anafro") Anatoly Frolov
-        | .
-        br
-        a(href="/terms-of-use") Terms of Use
-        |  | 
-        a(href="/policy") Privacy Policy
-        |  | 
-        |  Press 
-        button#progress-reset-button here
-        |  to reset your progress
-    #right-panel
-      img(src="/images/illustrations/sakura.svg")#sakura-illustration
   #progress-reset-container
     img#progress-reset-illustration(src="/images/illustrations/trash-can.svg")
     span#progress-reset-title Are you sure that you want to reset all your progress
