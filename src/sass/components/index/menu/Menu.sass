@@ -1,0 +1,14 @@
+@use 'sass:color'
+
+#content-container
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    row-gap: 3rem
+    height: 100vh
+    animation: content-container__fade-in 400ms ease-out
+    padding-inline: clamp(3lvw, 12rem, 10lvw)
+    padding-block: 8rem
+    position: relative
+    background: color.adjust(black, $alpha: -0.20)

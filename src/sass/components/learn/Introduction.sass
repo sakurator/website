@@ -1,0 +1,68 @@
+#introduction-container
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 100lvh
+    column-gap: 3rem
+    background: #FFFFFF
+
+.letter-introduction
+    display: none
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    &.introducing
+        display: flex
+        animation: letter-introduction 400ms ease-in-out forwards, letter-introduction-out 600ms 2500ms ease-in-out forwards
+        .letter-introduction-image
+            animation: letter-image-introduction-jump 400ms ease-in-out forwards
+        .letter-introduction-name
+            animation: letter-name-introduction-jump 400ms ease-in-out forwards
+
+.letter-introduction-image
+    width: 64rem
+    aspect-ratio: 1
+
+.letter-introduction-name
+    font-size: 2rem
+
+@keyframes letter-introduction
+    from
+        opacity: 0
+
+    to
+        opacity: 1
+
+@keyframes letter-introduction-out
+    from
+        opacity: 1
+        transform: scale(1) rotate(0)
+
+    85%
+        transform: scale(1.1) rotate(-5deg)
+        opacity: 1
+
+    to
+        transform: scale(0.5) rotate(45deg)
+        opacity: 0
+
+@keyframes letter-image-introduction-jump
+    from
+        transform: scale(1)
+
+    15%
+        transform: scale(1.1, 1.2) rotate(4deg) translateY(-0.33rem)
+
+    to
+        transform: scale(1)
+
+@keyframes letter-name-introduction-jump
+    from
+        opacity: 1
+
+    15%
+        opacity: 0.3
+
+    to
+        opacity: 1

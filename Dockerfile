@@ -5,11 +5,10 @@ RUN npm ci
 COPY prisma/ prisma/
 COPY prisma.config.ts .
 COPY public/ public/
-COPY routes/ routes/
 COPY src/ src/
 COPY views/ views/
 COPY ./entrypoint.sh .
-COPY ./bin/ ./bin/
-COPY app.js .
+COPY app.ts .
+COPY node.ts .
 ENTRYPOINT ["./entrypoint.sh"]
-CMD ["./bin/www"]
+CMD ["npx", "tsx", "node.ts"]

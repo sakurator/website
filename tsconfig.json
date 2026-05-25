@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "baseUrl": ".",
+        "jsx": "react-jsx",
+        "jsxImportSource": "react",
+        "esModuleInterop": true,
+        "lib": ["dom", "esnext"],
+        "paths": {
+            "@sass/*": [ "src/sass/*" ],
+            "@client/*": [ "src/client/*" ],
+            "@server/*": [ "src/server/*" ],
+            "@shared/*":  [ "src/shared/*" ],
+            "@components/*":  [ "src/client/components/*" ],
+            "@db/*": ["prisma/*"]
+        }
+    }
+}

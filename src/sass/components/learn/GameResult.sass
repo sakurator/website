@@ -1,0 +1,47 @@
+@use 'colors'
+
+@keyframes game-result-show
+    from
+        opacity: 0
+        transform: scale(6) rotate(-30deg)
+    40%
+        opacity: 1
+        transform: scale(1) rotate(0)
+    60%
+        opacity: 1
+        transform: scale(1) rotate(0)
+    to
+        opacity: 0
+        transform: scale(1) rotate(0)
+
+#game-results-container
+    display: flex
+    align-items: center
+    justify-content: center
+    height: 100lvh
+
+.game-result
+    display: none
+    &.shown
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        animation: game-result-show 1600ms ease-in forwards
+
+.petals-earned
+    font-size: 7rem
+    display: inline-block
+    line-height: 1rem
+    margin-right: 0.25rem
+    letter-spacing: 0.1rem
+
+.petals-earned-icon
+    width: 16rem
+    aspect-ratio: 1
+
+.petals-earned-for
+    font-size: 2rem
+    color: colors.$gray
+    text-align: center
+

@@ -37,6 +37,7 @@ model Row {
   id               Int      @id @default(autoincrement())
   name             String
   letter           String
+  slug             String
   petalsToComplete Int      @map("petals_to_complete")
   alphabetId       Int      @map("alphabet_id")
   alphabet         Alphabet @relation(fields: [alphabetId], references: [id])

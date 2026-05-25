@@ -1,0 +1,80 @@
+@use 'colors'
+@use 'ease'
+
+.row-card
+    background: white
+    border: 0px solid transparent
+    width: 10rem
+    height: 10rem
+    padding: 1rem
+    aspect-ratio: 1
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    border-radius: 1rem
+    box-shadow: 0.1rem 0.1rem 0.5rem #00000022
+    transition: 250ms ease.$ease-bouncy
+    box-sizing: border-box
+    cursor: pointer
+    &:hover
+        transform: scale(1.07) rotate(2deg)
+        box-shadow: 0.5rem 0.5rem 0.8rem #00000022
+        &.hiragana
+            border: 1px colors.$sakura solid
+        &.katakana
+            border: 1px colors.$turquoise solid
+
+.row-kana
+    width: 70%
+    height: auto
+
+.row-progress
+    width: 70%
+    min-height: 5px
+    *
+        border-radius: 50rem
+        height: 100%
+
+.row-progress-completed
+    transition: 150ms ease.$ease-bouncy
+    &.hiragana
+        background: colors.$sakura-gradient
+    &.katakana
+        background: colors.$turquoise-gradient
+
+.row-progress-full
+    width: 100%
+    background-color: colors.$gray
+
+.row-description
+    display: flex
+    flex-direction: column
+    padding-top: 0.25rem
+    transition: 100ms ease-out
+
+.row-title-container
+    display: flex
+    align-items: center
+    justify-content: center
+
+.row-completed-icon
+    margin-right: 4px
+    width: 8px
+    display: none
+
+.row-title
+    font-size: 1rem
+    line-height: 1rem
+
+.row-subtitle
+    display: flex
+    align-items: center
+    column-gap: 0.33rem
+    justify-content: center
+    font-size: 11px
+    color: colors.$gray
+    & > img
+        width: 1rem
+        aspect-ratio: 1 / 1
+
